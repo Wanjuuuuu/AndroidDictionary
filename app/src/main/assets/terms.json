@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Application",
+    "url": "android/app/Application"
+  },
+  {
+    "name": "Service",
+    "url": "android/app/Fragment"
+  },
+  {
+    "name": "Activity",
+    "url": "android/app/Activity"
+  },
+  {
+    "name": "Fragment",
+    "url": "android/app/Fragment"
+  }
+]
