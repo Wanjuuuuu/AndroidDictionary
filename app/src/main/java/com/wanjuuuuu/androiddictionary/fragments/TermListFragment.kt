@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
-import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
+import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
 
 class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
+    private val viewModel: TermListViewModel = TermListViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,14 +24,12 @@ class TermListFragment : Fragment() {
         val termAdapter = TermAdapter()
         binding.termList.adapter = termAdapter
 
-        // TODO : change into real data
-        submitMockData(termAdapter)
+        submitData(termAdapter)
 
         return binding.root
     }
 
-    private fun submitMockData(adapter: TermAdapter) {
-        val term = Term("name", "url/url")
-        adapter.submitList(listOf(term))
+    private fun submitData(adapter: TermAdapter) {
+        adapter.submitList(viewModel.terms)
     }
 }
