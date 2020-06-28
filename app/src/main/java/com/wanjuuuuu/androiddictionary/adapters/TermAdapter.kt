@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.ListItemTermBinding
 
-class TermAdapter : ListAdapter<Term, TermAdapter.TermViewHolder>(TermDiffCallback()) {
+class TermAdapter(val onClick: () -> Unit) :
+    ListAdapter<Term, TermAdapter.TermViewHolder>(TermDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermViewHolder {
         return TermViewHolder(
@@ -26,10 +27,10 @@ class TermAdapter : ListAdapter<Term, TermAdapter.TermViewHolder>(TermDiffCallba
         holder.bind(term)
     }
 
-    class TermViewHolder(private val binding: ListItemTermBinding) :
+    inner class TermViewHolder(private val binding: ListItemTermBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.clickListener = View.OnClickListener { TODO("change fragment??") }
+            binding.clickListener = View.OnClickListener { onClick() }
         }
 
         fun bind(item: Term) {

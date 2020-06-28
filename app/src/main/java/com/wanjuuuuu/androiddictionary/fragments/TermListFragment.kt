@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
@@ -21,7 +22,7 @@ class TermListFragment : Fragment() {
     ): View? {
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
-        val termAdapter = TermAdapter()
+        val termAdapter = TermAdapter { onClickTermItem() }
         binding.termList.adapter = termAdapter
 
         submitData(termAdapter)
@@ -31,5 +32,13 @@ class TermListFragment : Fragment() {
 
     private fun submitData(adapter: TermAdapter) {
         adapter.submitList(viewModel.terms)
+    }
+
+    private fun onClickTermItem() {
+        val termDetailFragment = TermDetailFragment()
+        requireActivity().supportFragmentManager.beginTransaction().apply {
+            replace(R.id.dictionary_container, termDetailFragment)
+            addToBackStack(null)
+        }.commit()
     }
 }

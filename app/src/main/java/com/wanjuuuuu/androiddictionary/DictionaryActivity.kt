@@ -7,6 +7,7 @@ import com.wanjuuuuu.androiddictionary.databinding.ActivityDictionaryBinding
 import com.wanjuuuuu.androiddictionary.fragments.TermListFragment
 
 class DictionaryActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ActivityDictionaryBinding>(
