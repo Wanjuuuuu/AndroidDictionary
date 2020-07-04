@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
@@ -13,7 +14,7 @@ import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
 class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
-    private val viewModel: TermListViewModel = TermListViewModel()
+    private val viewModel: TermListViewModel by lazy { TermListViewModel(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +32,9 @@ class TermListFragment : Fragment() {
     }
 
     private fun submitData(adapter: TermAdapter) {
-        adapter.submitList(viewModel.terms)
+        viewModel.terms.observe(
+            viewLifecycleOwner,
+            Observer { result -> adapter.submitList(result) })
     }
 
     private fun onClickTermItem() {
