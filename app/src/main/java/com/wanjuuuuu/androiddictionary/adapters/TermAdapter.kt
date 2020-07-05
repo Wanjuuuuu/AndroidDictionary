@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.ListItemTermBinding
 
-class TermAdapter(val onClick: () -> Unit) :
+class TermAdapter(val onClick: (term: Term) -> Unit) :
     ListAdapter<Term, TermAdapter.TermViewHolder>(TermDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermViewHolder {
@@ -30,7 +30,7 @@ class TermAdapter(val onClick: () -> Unit) :
     inner class TermViewHolder(private val binding: ListItemTermBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.clickListener = View.OnClickListener { onClick() }
+            binding.clickListener = View.OnClickListener { onClick(binding.term!!) }
         }
 
         fun bind(item: Term) {

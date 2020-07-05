@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
+import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
 
@@ -23,7 +24,7 @@ class TermListFragment : Fragment() {
     ): View? {
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
-        val termAdapter = TermAdapter { onClickTermItem() }
+        val termAdapter = TermAdapter { term -> onClickTermItem(term) }
         binding.termList.adapter = termAdapter
 
         submitData(termAdapter)
@@ -37,8 +38,8 @@ class TermListFragment : Fragment() {
             Observer { result -> adapter.submitList(result) })
     }
 
-    private fun onClickTermItem() {
-        val termDetailFragment = TermDetailFragment()
+    private fun onClickTermItem(term: Term) {
+        val termDetailFragment = TermDetailFragment(term)
         requireActivity().supportFragmentManager.beginTransaction().apply {
             replace(R.id.dictionary_container, termDetailFragment)
             addToBackStack(null)

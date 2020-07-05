@@ -5,7 +5,7 @@
   },
   {
     "name": "Service",
-    "url": "android/app/Fragment"
+    "url": "android/app/Service"
   },
   {
     "name": "Activity",
