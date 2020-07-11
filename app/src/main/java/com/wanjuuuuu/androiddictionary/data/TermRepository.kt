@@ -7,14 +7,13 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
 import com.wanjuuuuu.androiddictionary.utils.TERM_DATA_FILENAME
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.lang.Exception
 
-class TermRepository(private val context: Context) {
+class TermRepository(private val coroutineScope: CoroutineScope) {
 
     companion object {
         private const val TAG = "TermRepository"
@@ -22,13 +21,12 @@ class TermRepository(private val context: Context) {
             "#jd-content > p, #jd-content > h3, #jd-content > ol, #jd-content > ul"
     }
 
-    fun getTerms(): List<Term> {
+    fun getTerms(context: Context): List<Term> {
         context.applicationContext.assets.open(TERM_DATA_FILENAME).use { inputStream ->
             try {
                 JsonReader(inputStream.reader()).use { jsonReader ->
                     val type = object : TypeToken<List<Term>>() {}.type
                     val terms: List<Term> = Gson().fromJson(jsonReader, type)
-                    Log.d(TAG, "$terms")
                     return terms
                 }
             } catch (e: Exception) {
@@ -39,23 +37,26 @@ class TermRepository(private val context: Context) {
     }
 
     suspend fun getTerm(term: Term): Term {
-        val description = getDescription(term.url)
+        val description = getDescription(term.url).await()
         term.description = description
         term.modifyTime = System.currentTimeMillis()
+        Log.d(TAG, "$term, ${term.modifyTime} ${term.description}")
         return term
     }
 
-    private suspend fun getDescription(url: String): String = withContext(Dispatchers.IO) {
-        var description = ""
-        try {
-            val document = Jsoup.connect("$ANDROID_REFERENCE_BASE_URL$url").get()
-            val elements = document.body().select(SELECTOR)
-            description = parseDescription(elements)
-        } catch (e: Exception) {
-            Log.e(TAG, "cannot parse : $e")
+    private fun getDescription(url: String): Deferred<String> =
+        coroutineScope.async(Dispatchers.IO) {
+            var description = ""
+            try {
+                val document = Jsoup.connect("$ANDROID_REFERENCE_BASE_URL$url").get()
+                val elements = document.body().select(SELECTOR)
+                description = parseDescription(elements)
+                Log.d(TAG, description)
+            } catch (e: Exception) {
+                Log.e(TAG, "cannot parse : $e")
+            }
+            description
         }
-        description
-    }
 
     private fun parseDescription(elements: Elements): String {
         val stringBuilder = StringBuilder()

@@ -13,7 +13,7 @@ import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
 class TermDetailFragment(term: Term) : Fragment() {
 
     private lateinit var binding: FragmentTermDetailBinding
-    private val viewModel by lazy { TermDetailViewModel(requireContext(), term) }
+    private val viewModel by lazy { TermDetailViewModel(term) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
