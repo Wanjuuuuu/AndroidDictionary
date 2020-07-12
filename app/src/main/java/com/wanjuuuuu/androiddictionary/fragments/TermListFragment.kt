@@ -39,7 +39,7 @@ class TermListFragment : Fragment() {
     }
 
     private fun onClickTermItem(term: Term) {
-        val termDetailFragment = TermDetailFragment(term)
+        val termDetailFragment = TermDetailFragment(term.id)
         requireActivity().supportFragmentManager.beginTransaction().apply {
             replace(R.id.dictionary_container, termDetailFragment)
             addToBackStack(null)

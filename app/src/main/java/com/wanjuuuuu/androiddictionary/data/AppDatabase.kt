@@ -29,6 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
+
                         coroutineScope.launch(Dispatchers.IO) {
                             val terms = DataPopulator(context).prepopulate()
                             getInstance(context, coroutineScope).termDao().insertTerms(terms)

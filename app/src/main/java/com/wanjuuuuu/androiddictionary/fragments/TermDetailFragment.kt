@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
 import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
 
-class TermDetailFragment(term: Term) : Fragment() {
+class TermDetailFragment(termId: Long) : Fragment() {
 
     private lateinit var binding: FragmentTermDetailBinding
-    private val viewModel by lazy { TermDetailViewModel(requireContext(), term) }
+    private val viewModel by lazy { TermDetailViewModel(requireContext(), termId) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

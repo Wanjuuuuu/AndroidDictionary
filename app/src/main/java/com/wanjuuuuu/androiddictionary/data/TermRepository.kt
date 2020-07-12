@@ -15,13 +15,17 @@ class TermRepository(private val context: Context, private val coroutineScope: C
         return AppDatabase.getInstance(context, coroutineScope).termDao().getTerms()
     }
 
-    fun getTerm(term: Term): Term {
+    fun getTerm(termId: Long): LiveData<Term> {
+        val database = AppDatabase.getInstance(context, coroutineScope)
+
         coroutineScope.launch(Dispatchers.IO) {
-            val description = TermScrapper().getDescription(term.url)
-            term.description = description
+            val term = database.termDao().getNaiveTerm(termId)
+            term.description = TermScrapper().getDescription(term.url)
             term.modifyTime = System.currentTimeMillis()
-            Log.d(TAG, "$term, ${term.modifyTime} ${term.description}")
+            Log.d(TAG, term.toString())
+
+            database.termDao().updateTerm(term)
         }
-        return term
+        return database.termDao().getTerm(termId)
     }
 }

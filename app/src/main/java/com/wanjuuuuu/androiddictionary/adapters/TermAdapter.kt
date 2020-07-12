@@ -41,7 +41,7 @@ class TermAdapter(val onClick: (term: Term) -> Unit) :
 
 private class TermDiffCallback : DiffUtil.ItemCallback<Term>() {
     override fun areItemsTheSame(oldItem: Term, newItem: Term): Boolean {
-        TODO("yet no primary key for Term")
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Term, newItem: Term): Boolean {
