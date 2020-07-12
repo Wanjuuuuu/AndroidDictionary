@@ -13,7 +13,7 @@ class TermRepository(private val context: Context, private val coroutineScope: C
     fun getTerm(termId: Long): LiveData<Term> {
         val database = AppDatabase.getInstance(context, coroutineScope)
 
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.Default) {
             val term = database.termDao().getNaiveTerm(termId)
             if (term.isExpired) {
                 term.description = TermScrapper().getDescription(term.url)
