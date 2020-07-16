@@ -14,5 +14,93 @@
   {
     "name": "Fragment",
     "url": "android/app/Fragment"
+  },
+  {
+    "name": "ActionBar",
+    "url": "android/app/ActionBar"
+  },
+  {
+    "name": "ActionBar",
+    "url": "android/app/ActionBar"
+  },
+  {
+    "name": "Dialog",
+    "url": "android/app/Dialog"
+  },
+  {
+    "name": "DownloadManager",
+    "url": "android/app/DownloadManager"
+  },
+  {
+    "name": "FragmentTransaction",
+    "url": "android/app/FragmentTransaction"
+  },
+  {
+    "name": "IntentService",
+    "url": "android/app/IntentService"
+  },
+  {
+    "name": "Service",
+    "url": "android/app/Service"
+  },
+  {
+    "name": "Notification",
+    "url": "android/app/Notification"
+  },
+  {
+    "name": "Context",
+    "url": "android/content/Context"
+  },
+  {
+    "name": "ContentProvider",
+    "url": "android/content/ContentProvider"
+  },
+  {
+    "name": "ContextWrapper",
+    "url": "android/content/ContextWrapper"
+  },
+  {
+    "name": "Intent",
+    "url": "android/content/Intent"
+  },
+  {
+    "name": "View",
+    "url": "android/view/View"
+  },
+  {
+    "name": "ViewGroup",
+    "url": "android/view/ViewGroup"
+  },
+  {
+    "name": "Window",
+    "url": "android/view/Window"
+  },
+  {
+    "name": "TextureView",
+    "url": "android/view/TextureView"
+  },
+  {
+    "name": "SurfaceView",
+    "url": "android/view/SurfaceView"
+  },
+  {
+  "name": "LayoutInflater",
+  "url": "android/view/LayoutInflater"
+  },
+  {
+    "name": "ViewStub",
+    "url": "android/view/ViewStub"
+  },
+  {
+    "name": "WebView",
+    "url": "android/webkit/WebView"
+  },
+  {
+    "name": "WebChromeClient",
+    "url": "android/webkit/WebView"
+  },
+  {
+    "name": "WebViewClient",
+    "url": "android/webkit/WebViewClient"
   }
 ]
