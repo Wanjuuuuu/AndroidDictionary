@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 
-class TermRepository(private val context: Context, private val coroutineScope: CoroutineScope) {
+class TermRepository(private val context: Context) {
 
-    fun getTerms(): LiveData<List<Term>> {
+    fun getTerms(coroutineScope: CoroutineScope): LiveData<List<Term>> {
         return AppDatabase.getInstance(context, coroutineScope).termDao().getTerms()
     }
 
-    fun getTerm(termId: Long): LiveData<Term> {
+    fun getTerm(termId: Long, coroutineScope: CoroutineScope): LiveData<Term> {
         val database = AppDatabase.getInstance(context, coroutineScope)
 
         coroutineScope.launch(Dispatchers.Default) {
