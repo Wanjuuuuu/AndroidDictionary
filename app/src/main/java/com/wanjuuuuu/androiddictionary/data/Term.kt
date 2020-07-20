@@ -1,8 +1,6 @@
 package com.wanjuuuuu.androiddictionary.data
 
-import androidx.annotation.Nullable
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
 import java.util.*
