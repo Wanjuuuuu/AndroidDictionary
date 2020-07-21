@@ -7,10 +7,7 @@
     <dimen name="list_item_paddingEnd">10dp</dimen>
     <dimen name="rectangle_radius">24dp</dimen>
     <dimen name="rectangle_strokeWidth">0.5dp</dimen>
-    <dimen name="term_detail_paddingStart">12dp</dimen>
-    <dimen name="term_detail_paddingEnd">10dp</dimen>
-    <dimen name="term_detail_paddingTop">10dp</dimen>
-    <dimen name="term_detail_paddingBottom">12dp</dimen>
+    <dimen name="term_detail_padding">6dp</dimen>
     <dimen name="detail_header_height">100dp</dimen>
     <dimen name="detail_header_marginTop">16dp</dimen>
     <dimen name="detail_title_textSize">28sp</dimen>

@@ -19,10 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="@dimen/term_detail_paddingStart"
-            android:paddingTop="@dimen/term_detail_paddingTop"
-            android:paddingEnd="@dimen/term_detail_paddingEnd"
-            android:paddingBottom="@dimen/term_detail_paddingBottom">
+            android:padding="@dimen/term_detail_padding">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
