@@ -1,26 +1,35 @@
 package com.wanjuuuuu.androiddictionary.data
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 
-class TermRepository(private val context: Context) {
+class TermRepository private constructor(private val termDao: TermDao) {
+
+    companion object {
+        @Volatile
+        private var instance: TermRepository? = null
+
+        @JvmStatic
+        fun getInstance(termDao: TermDao): TermRepository {
+            return instance ?: synchronized(this) {
+                instance ?: TermRepository(termDao).also { instance = it }
+            }
+        }
+    }
 
     fun getTerms(): LiveData<List<Term>> {
-        return AppDatabase.getInstance(context).termDao().getTerms()
+        return termDao.getTerms()
     }
 
     fun getTerm(termId: Long, coroutineScope: CoroutineScope): LiveData<Term> {
-        val database = AppDatabase.getInstance(context)
-
         coroutineScope.launch(Dispatchers.Default) {
-            val term = database.termDao().getNaiveTerm(termId)
+            val term = termDao.getNaiveTerm(termId)
             if (term.isExpired) {
                 term.description = TermScrapper().getDescription(term.url)
                 term.modifyTime = System.currentTimeMillis()
-                database.termDao().updateTerm(term)
+                termDao.updateTerm(term)
             }
         }
-        return database.termDao().getTerm(termId)
+        return termDao.getTerm(termId)
     }
 }

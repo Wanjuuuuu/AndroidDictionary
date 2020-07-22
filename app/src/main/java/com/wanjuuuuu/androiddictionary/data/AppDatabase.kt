@@ -11,6 +11,7 @@ import com.wanjuuuuu.androiddictionary.utils.DATABASE_NAME
 
 @Database(entities = [Term::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+
     abstract fun termDao(): TermDao
 
     companion object {
