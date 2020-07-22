@@ -4,6 +4,7 @@ buildscript {
         kotlinVersion = "1.3.72"
         coroutineVersion = "1.3.7"
         roomVersion = "2.2.5"
+        workVersion = "2.3.4"
     }
     repositories {
         google()
