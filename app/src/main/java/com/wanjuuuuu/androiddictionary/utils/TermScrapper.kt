@@ -1,19 +1,16 @@
-package com.wanjuuuuu.androiddictionary.data
+package com.wanjuuuuu.androiddictionary.utils
 
 import android.util.Log
-import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.lang.Exception
 
-class TermScrapper {
+object TermScrapper {
 
-    companion object {
-        private const val TAG = "TermScrapper"
-        private const val SELECTOR =
-            "#jd-content > p, #jd-content > h3, #jd-content > ol, #jd-content > ul"
-    }
+    private const val TAG = "TermScrapper"
+    private const val SELECTOR =
+        "#jd-content > p, #jd-content > h3, #jd-content > ol, #jd-content > ul"
 
     fun getDescription(url: String): String {
         var description = ""
@@ -45,8 +42,16 @@ class TermScrapper {
                 stringBuilder.append(" ")
                 stringBuilder.appendln(element.text())
             }
-            element.`is`("ol") -> parseListElement(stringBuilder, element, true)
-            element.`is`("ul") -> parseListElement(stringBuilder, element, false)
+            element.`is`("ol") -> parseListElement(
+                stringBuilder,
+                element,
+                true
+            )
+            element.`is`("ul") -> parseListElement(
+                stringBuilder,
+                element,
+                false
+            )
             else -> stringBuilder.appendln(element.text())
         }
     }

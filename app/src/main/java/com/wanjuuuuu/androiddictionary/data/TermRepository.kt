@@ -1,6 +1,7 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import androidx.lifecycle.LiveData
+import com.wanjuuuuu.androiddictionary.utils.TermScrapper
 import kotlinx.coroutines.*
 
 class TermRepository private constructor(private val termDao: TermDao) {
@@ -25,7 +26,7 @@ class TermRepository private constructor(private val termDao: TermDao) {
         coroutineScope.launch(Dispatchers.Default) {
             val term = termDao.getNaiveTerm(termId)
             if (term.isExpired) {
-                term.description = TermScrapper().getDescription(term.url)
+                term.description = TermScrapper.getDescription(term.url)
                 term.modifyTime = System.currentTimeMillis()
                 termDao.updateTerm(term)
             }
