@@ -6,12 +6,12 @@ import kotlinx.coroutines.*
 
 class TermRepository(private val context: Context) {
 
-    fun getTerms(coroutineScope: CoroutineScope): LiveData<List<Term>> {
-        return AppDatabase.getInstance(context, coroutineScope).termDao().getTerms()
+    fun getTerms(): LiveData<List<Term>> {
+        return AppDatabase.getInstance(context).termDao().getTerms()
     }
 
     fun getTerm(termId: Long, coroutineScope: CoroutineScope): LiveData<Term> {
-        val database = AppDatabase.getInstance(context, coroutineScope)
+        val database = AppDatabase.getInstance(context)
 
         coroutineScope.launch(Dispatchers.Default) {
             val term = database.termDao().getNaiveTerm(termId)
