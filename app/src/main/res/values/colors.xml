@@ -9,4 +9,7 @@
 
     <color name="outer_background">#ffefefef</color>
     <color name="inner_background">#ffffffff</color>
+
+    <color name="bookmark_normal">#ffe6e6e6</color>
+    <color name="bookmark_selected">#fffa6df5</color>
 </resources>
