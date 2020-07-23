@@ -22,15 +22,16 @@ class TermRepository private constructor(private val termDao: TermDao) {
         return termDao.getTerms()
     }
 
-    fun getTerm(termId: Long, coroutineScope: CoroutineScope): LiveData<Term> {
-        coroutineScope.launch(Dispatchers.Default) {
-            val term = termDao.getNaiveTerm(termId)
-            if (term.isExpired) {
-                term.description = TermScrapper.getDescription(term.url)
-                term.modifyTime = System.currentTimeMillis()
-                termDao.updateTerm(term)
-            }
-        }
+    fun getTerm(termId: Long): LiveData<Term> {
         return termDao.getTerm(termId)
+    }
+
+    fun updateTermDescriptionIfExpired(termId: Long) {
+        val term = termDao.getNaiveTerm(termId)
+        if (term.isExpired) {
+            term.description = TermScrapper.getDescription(term.url)
+            term.modifyTime = System.currentTimeMillis()
+            termDao.updateTerm(term)
+        }
     }
 }
