@@ -18,7 +18,6 @@ object TermScrapper {
             val document = Jsoup.connect("$ANDROID_REFERENCE_BASE_URL$url").get()
             val elements = document.body().select(SELECTOR)
             description = parseDescription(elements)
-            Log.d(TAG, description)
         } catch (e: Exception) {
             Log.e(TAG, "cannot parse : $e")
         }
@@ -28,43 +27,56 @@ object TermScrapper {
     private fun parseDescription(elements: Elements): String {
         val stringBuilder = StringBuilder()
         for ((index, element) in elements.withIndex()) {
-            parseElement(stringBuilder, element)
-            if (index != elements.lastIndex) {
-                stringBuilder.appendln()
-            }
+            val isLastLine = (index == elements.lastIndex)
+            val text = parseElement(element, isLastLine)
+            appendString(stringBuilder, text, isLastLine)
+            removeNewLineIfBlankAndLastLine(stringBuilder, text, isLastLine)
         }
         return stringBuilder.toString()
     }
 
-    private fun parseElement(stringBuilder: StringBuilder, element: Element) {
-        when {
-            element.`is`("p") -> {
-                stringBuilder.append(" ")
-                stringBuilder.appendln(element.text())
-            }
-            element.`is`("ol") -> parseListElement(
-                stringBuilder,
-                element,
-                true
-            )
-            element.`is`("ul") -> parseListElement(
-                stringBuilder,
-                element,
-                false
-            )
-            else -> stringBuilder.appendln(element.text())
+    private fun parseElement(element: Element, isLastLine: Boolean): String {
+        return when {
+            element.`is`("p") -> parsePlainElement(element, isLastLine)
+            element.`is`("ol") -> parseListElement(element, true, isLastLine)
+            element.`is`("ul") -> parseListElement(element, false, isLastLine)
+            else -> parsePlainElement(element, isLastLine)
         }
     }
 
+    private fun parsePlainElement(element: Element, isLastLine: Boolean): String {
+        val stringBuilder = StringBuilder()
+        appendString(stringBuilder, element.text(), isLastLine)
+        return stringBuilder.toString()
+    }
+
     private fun parseListElement(
-        stringBuilder: StringBuilder,
         listElement: Element,
-        isOrdered: Boolean
-    ) {
+        isOrdered: Boolean,
+        isLastLine: Boolean
+    ): String {
+        val stringBuilder = StringBuilder()
         val elements = listElement.select("li")
         for ((index, element) in elements.withIndex()) {
             stringBuilder.append(if (isOrdered) "\t${index + 1}. " else "\t- ")
-            stringBuilder.appendln(element.text())
+            appendString(stringBuilder, element.text(), isLastLine)
+        }
+        return stringBuilder.toString()
+    }
+
+    private fun appendString(stringBuilder: StringBuilder, text: String, isLastLine: Boolean) {
+        if (text.isBlank()) return
+        if (isLastLine) stringBuilder.append(text)
+        else stringBuilder.appendln(text)
+    }
+
+    private fun removeNewLineIfBlankAndLastLine(
+        stringBuilder: StringBuilder,
+        text: String,
+        isLastLine: Boolean
+    ) {
+        if (text.isBlank() && isLastLine && stringBuilder.length >= 2) {
+            stringBuilder.setLength(stringBuilder.length - 2)
         }
     }
 }
