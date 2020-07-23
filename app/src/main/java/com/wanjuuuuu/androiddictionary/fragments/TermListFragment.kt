@@ -31,12 +31,12 @@ class TermListFragment : Fragment() {
         val termAdapter = TermAdapter { term -> onClickTermItem(term) }
         binding.termList.adapter = termAdapter
 
-        submitData(termAdapter)
+        observeData(termAdapter)
 
         return binding.root
     }
 
-    private fun submitData(adapter: TermAdapter) {
+    private fun observeData(adapter: TermAdapter) {
         viewModel.terms.observe(
             viewLifecycleOwner,
             Observer { result -> adapter.submitList(result) })

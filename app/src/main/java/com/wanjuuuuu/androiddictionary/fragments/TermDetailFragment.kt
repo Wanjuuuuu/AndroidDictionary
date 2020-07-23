@@ -27,17 +27,22 @@ class TermDetailFragment(termId: Long) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTermDetailBinding.inflate(inflater, container, false)
-        binding.bookmarkClickListener =
-            View.OnClickListener { it.apply { isSelected = !isSelected } }
+        observeData()
+        initBookmarkButton()
 
-        submitData()
         updateDataAsync()
 
         return binding.root
     }
 
-    private fun submitData() {
+    private fun observeData() {
         viewModel.term.observe(viewLifecycleOwner, Observer { result -> binding.term = result })
+    }
+
+    private fun initBookmarkButton() {
+        binding.bookmarkClickListener = View.OnClickListener {
+            it.apply { isSelected = !isSelected }
+        }
     }
 
     private fun updateDataAsync() {
