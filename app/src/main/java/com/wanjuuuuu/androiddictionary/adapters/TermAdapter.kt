@@ -3,6 +3,8 @@ package com.wanjuuuuu.androiddictionary.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +32,14 @@ class TermAdapter(val onClick: (term: Term) -> Unit) :
     inner class TermViewHolder(private val binding: ListItemTermBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.clickListener = View.OnClickListener { onClick(binding.term!!) }
+            binding.itemClickListener = View.OnClickListener { onClick(binding.term!!) }
+            binding.bookmarkClickListener =
+                View.OnClickListener { it.apply { isSelected = !isSelected } }
         }
 
         fun bind(item: Term) {
             binding.term = item
+            binding.bookmarkButton.isSelected = false // set to false
         }
     }
 }

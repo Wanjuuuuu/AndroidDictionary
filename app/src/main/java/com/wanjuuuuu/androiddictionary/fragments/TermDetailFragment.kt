@@ -27,6 +27,8 @@ class TermDetailFragment(termId: Long) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTermDetailBinding.inflate(inflater, container, false)
+        binding.bookmarkClickListener =
+            View.OnClickListener { it.apply { isSelected = !isSelected } }
 
         submitData()
         updateDataAsync()
