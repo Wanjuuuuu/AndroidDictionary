@@ -18,7 +18,7 @@ class TermRepository private constructor(private val termDao: TermDao) {
         }
     }
 
-    fun getTerms(): LiveData<List<Term>> {
+    fun getAllTerms(): LiveData<List<Term>> {
         return termDao.getTerms()
     }
 
@@ -33,5 +33,9 @@ class TermRepository private constructor(private val termDao: TermDao) {
             term.modifyTime = System.currentTimeMillis()
             termDao.updateTerm(term)
         }
+    }
+
+    fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
+        termDao.updateTermBookmarked(termId, bookmarked)
     }
 }

@@ -21,6 +21,9 @@ interface TermDao {
     @Update
     fun updateTerm(term: Term)
 
+    @Query("update terms set bookmarked = :bookmarked where id = :id")
+    fun updateTermBookmarked(id: Long, bookmarked: Boolean)
+
     @Delete
     fun deleteTerm(term: Term)
 

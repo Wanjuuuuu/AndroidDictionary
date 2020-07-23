@@ -4,5 +4,5 @@ import androidx.lifecycle.ViewModel
 import com.wanjuuuuu.androiddictionary.data.TermRepository
 
 class TermListViewModel(termRepository: TermRepository) : ViewModel() {
-    val terms = termRepository.getTerms()
+    val terms = termRepository.getAllTerms()
 }
