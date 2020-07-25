@@ -57,7 +57,8 @@
                     android:layout_marginStart="@dimen/detail_bookmark_marginStart"
                     android:background="@drawable/bookmark_selector"
                     android:contentDescription="@string/bookmark"
-                    android:onClick="@{bookmarkClickListener}" />
+                    android:onClick="@{bookmarkClickListener}"
+                    app:isSelected="@{term.bookmarked}" />
             </LinearLayout>
 
             <LinearLayout
