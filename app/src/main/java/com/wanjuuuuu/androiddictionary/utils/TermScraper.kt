@@ -6,9 +6,9 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.lang.Exception
 
-object TermScrapper {
+object TermScraper {
 
-    private const val TAG = "TermScrapper"
+    private const val TAG = "TermScraper"
     private const val SELECTOR =
         "#jd-content > p, #jd-content > h3, #jd-content > ol, #jd-content > ul"
 

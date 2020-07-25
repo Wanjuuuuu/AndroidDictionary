@@ -13,14 +13,14 @@ data class Term(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
     var description: String? = null
-    var modifyTime: Long = 0
+    var scrapedTime: Long = 0
     var bookmarked: Boolean = false
 
-    val isExpired: Boolean
-        get() = System.currentTimeMillis() - modifyTime > SCRAP_EXPIRE_MILLI
+    val needRescraping: Boolean
+        get() = System.currentTimeMillis() - scrapedTime > SCRAP_EXPIRE_MILLI
 
     override fun toString(): String {
-        return "id=$id\nname=$name\nurl=$url\nmodifyTime=$modifyTime\ndescription=$description"
+        return "id=$id\nname=$name\nurl=$url\nmodifyTime=$scrapedTime\ndescription=$description"
     }
 
     companion object {

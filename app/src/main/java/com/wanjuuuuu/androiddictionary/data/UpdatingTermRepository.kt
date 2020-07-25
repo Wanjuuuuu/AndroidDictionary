@@ -1,6 +1,6 @@
 package com.wanjuuuuu.androiddictionary.data
 
-import com.wanjuuuuu.androiddictionary.utils.TermScrapper
+import com.wanjuuuuu.androiddictionary.utils.TermScraper
 
 class UpdatingTermRepository private constructor(private val termDao: TermDao) {
 
@@ -18,9 +18,9 @@ class UpdatingTermRepository private constructor(private val termDao: TermDao) {
 
     fun updateTermDescriptionIfExpired(termId: Long) {
         val term = termDao.getNaiveTerm(termId)
-        if (term.isExpired) {
-            term.description = TermScrapper.getDescription(term.url)
-            term.modifyTime = System.currentTimeMillis()
+        if (term.needRescraping) {
+            term.description = TermScraper.getDescription(term.url)
+            term.scrapedTime = System.currentTimeMillis()
             termDao.updateTerm(term)
         }
     }
