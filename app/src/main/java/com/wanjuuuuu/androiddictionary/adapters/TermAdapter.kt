@@ -52,6 +52,6 @@ private class TermDiffCallback : DiffUtil.ItemCallback<Term>() {
     }
 
     override fun areContentsTheSame(oldItem: Term, newItem: Term): Boolean {
-        return oldItem == newItem
+        return oldItem.bookmarked == newItem.bookmarked // changes to be applied
     }
 }
