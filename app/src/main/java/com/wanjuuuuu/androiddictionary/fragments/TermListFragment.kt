@@ -19,7 +19,7 @@ class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
     private val viewModel: TermListViewModel by viewModels {
-        Injector.provideTermListViewModelFactory(requireContext())
+        Injector.provideTermListViewModelFactory(this)
     }
     private val updatingTermRepository by lazy {
         Injector.getUpdatingTermRepository(requireContext())
@@ -49,10 +49,7 @@ class TermListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_bookmark -> {
-                with(viewModel) {
-                    filterTermsByBookmark(reverseFilter())
-                }
-                observeData(binding.termList.adapter as TermAdapter)
+                viewModel.reverseFilter()
                 true
             }
             else -> super.onOptionsItemSelected(item)
