@@ -20,6 +20,9 @@ class TermDetailFragment(private val termId: Long) : Fragment() {
     private val viewModel: TermDetailViewModel by viewModels {
         Injector.provideTermDetailViewModelFactory(requireContext(), termId)
     }
+    private val updatingTermRepository by lazy {
+        Injector.getUpdatingTermRepository(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +45,9 @@ class TermDetailFragment(private val termId: Long) : Fragment() {
     private fun initBookmarkButton() {
         binding.bookmarkClickListener = View.OnClickListener {
             it.apply { isSelected = !isSelected }
+            lifecycleScope.launch(Dispatchers.Default) {
+                updatingTermRepository.setTermBookmarked(termId, it.isSelected)
+            }
         }
     }
 

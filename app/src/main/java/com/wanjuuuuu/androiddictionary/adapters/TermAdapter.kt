@@ -3,15 +3,16 @@ package com.wanjuuuuu.androiddictionary.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.ListItemTermBinding
 
-class TermAdapter(val onClick: (term: Term) -> Unit) :
+class TermAdapter(
+    private val onClickItem: (term: Term) -> Unit,
+    private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit
+) :
     ListAdapter<Term, TermAdapter.TermViewHolder>(TermDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermViewHolder {
@@ -32,14 +33,15 @@ class TermAdapter(val onClick: (term: Term) -> Unit) :
     inner class TermViewHolder(private val binding: ListItemTermBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.itemClickListener = View.OnClickListener { onClick(binding.term!!) }
-            binding.bookmarkClickListener =
-                View.OnClickListener { it.apply { isSelected = !isSelected } }
+            binding.itemClickListener = View.OnClickListener { onClickItem(binding.term!!) }
         }
 
         fun bind(item: Term) {
             binding.term = item
-            binding.bookmarkButton.isSelected = false // set to false
+            binding.bookmarkClickListener = View.OnClickListener {
+                it.apply { isSelected = !isSelected }
+                onClickBookmark(item.id, it.isSelected)
+            }
         }
     }
 }
