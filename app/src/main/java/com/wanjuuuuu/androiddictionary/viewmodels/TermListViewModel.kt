@@ -1,8 +1,8 @@
 package com.wanjuuuuu.androiddictionary.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.wanjuuuuu.androiddictionary.data.TermRepository
+import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
 
-class TermListViewModel(termRepository: TermRepository) : ViewModel() {
-    val terms = termRepository.getAllTerms()
+class TermListViewModel(gettingTermRepository: GettingTermRepository) : ViewModel() {
+    val terms = gettingTermRepository.getAllTerms()
 }

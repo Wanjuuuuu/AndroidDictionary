@@ -14,7 +14,7 @@ import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TermDetailFragment(termId: Long) : Fragment() {
+class TermDetailFragment(private val termId: Long) : Fragment() {
 
     private lateinit var binding: FragmentTermDetailBinding
     private val viewModel: TermDetailViewModel by viewModels {
@@ -46,8 +46,9 @@ class TermDetailFragment(termId: Long) : Fragment() {
     }
 
     private fun updateDataAsync() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.updateTermDescription()
+        lifecycleScope.launch(Dispatchers.Default) {
+            Injector.getUpdatingTermRepository(requireContext())
+                .updateTermDescriptionIfExpired(termId)
         }
     }
 }

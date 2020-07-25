@@ -1,29 +1,19 @@
 package com.wanjuuuuu.androiddictionary.data
 
-import androidx.lifecycle.LiveData
 import com.wanjuuuuu.androiddictionary.utils.TermScrapper
-import kotlinx.coroutines.*
 
-class TermRepository private constructor(private val termDao: TermDao) {
+class UpdatingTermRepository private constructor(private val termDao: TermDao) {
 
     companion object {
         @Volatile
-        private var instance: TermRepository? = null
+        private var instance: UpdatingTermRepository? = null
 
         @JvmStatic
-        fun getInstance(termDao: TermDao): TermRepository {
+        fun getInstance(termDao: TermDao): UpdatingTermRepository {
             return instance ?: synchronized(this) {
-                instance ?: TermRepository(termDao).also { instance = it }
+                instance ?: UpdatingTermRepository(termDao).also { instance = it }
             }
         }
-    }
-
-    fun getAllTerms(): LiveData<List<Term>> {
-        return termDao.getTerms()
-    }
-
-    fun getTerm(termId: Long): LiveData<Term> {
-        return termDao.getTerm(termId)
     }
 
     fun updateTermDescriptionIfExpired(termId: Long) {

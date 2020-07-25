@@ -1,13 +1,9 @@
 package com.wanjuuuuu.androiddictionary.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.wanjuuuuu.androiddictionary.data.TermRepository
+import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
 
-class TermDetailViewModel(private val termRepository: TermRepository, private val termId: Long) :
+class TermDetailViewModel(gettingTermRepository: GettingTermRepository, termId: Long) :
     ViewModel() {
-    val term = termRepository.getTerm(termId)
-
-    fun updateTermDescription() {
-        termRepository.updateTermDescriptionIfExpired(termId)
-    }
+    val term = gettingTermRepository.getTerm(termId)
 }
