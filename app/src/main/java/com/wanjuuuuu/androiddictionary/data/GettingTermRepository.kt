@@ -20,6 +20,10 @@ class GettingTermRepository private constructor(private val termDao: TermDao) {
         return termDao.getTerms()
     }
 
+    fun getTermsBookmarked(): LiveData<List<Term>> {
+        return termDao.getTermsBoorkmarked()
+    }
+
     fun getTerm(termId: Long): LiveData<Term> {
         return termDao.getTerm(termId)
     }

@@ -46,6 +46,19 @@ class TermListFragment : Fragment() {
         inflater.inflate(R.menu.menu_term_list, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter_bookmark -> {
+                with(viewModel) {
+                    filterTermsByBookmark(reverseFilter())
+                }
+                observeData(binding.termList.adapter as TermAdapter)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setUpFragment() {
         setHasOptionsMenu(true)
     }

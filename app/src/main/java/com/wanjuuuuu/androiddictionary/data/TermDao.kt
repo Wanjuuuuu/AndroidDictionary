@@ -9,6 +9,9 @@ interface TermDao {
     @Query("select * from terms order by id")
     fun getTerms(): LiveData<List<Term>>
 
+    @Query("select * from terms where bookmarked = 1 order by id")
+    fun getTermsBoorkmarked(): LiveData<List<Term>>
+
     @Query("select * from terms where id = :id")
     fun getTerm(id: Long): LiveData<Term>
 
