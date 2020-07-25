@@ -5,11 +5,11 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="content_textColor">#ff3f3f3f</color>
-    <color name="date_textColor">#ff7f7f7f</color>
 
     <color name="outer_background">#ffefefef</color>
     <color name="inner_background">#ffffffff</color>
 
     <color name="bookmark_normal">#ffe6e6e6</color>
     <color name="bookmark_selected">#fffa6df5</color>
+    <color name="filter_menu">#ffffffff</color>
 </resources>

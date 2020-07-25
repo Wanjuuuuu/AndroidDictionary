@@ -1,9 +1,7 @@
 package com.wanjuuuuu.androiddictionary.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -32,6 +30,7 @@ class TermListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setUpFragment()
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
         val termAdapter = TermAdapter({ term -> onClickTermItem(term) },
@@ -41,6 +40,14 @@ class TermListFragment : Fragment() {
         observeData(termAdapter)
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_term_list, menu)
+    }
+
+    private fun setUpFragment() {
+        setHasOptionsMenu(true)
     }
 
     private fun observeData(adapter: TermAdapter) {

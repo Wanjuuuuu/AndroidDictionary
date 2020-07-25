@@ -2,4 +2,5 @@
     <string name="app_name">AndroidDictionary</string>
     <string name="dummy_text">This is Dummy text.</string>
     <string name="bookmark">Bookmark</string>
+    <string name="filterByBookmark">Show only Bookmarked Terms</string>
 </resources>
