@@ -15,8 +15,10 @@ class DictionaryActivity : AppCompatActivity() {
             R.layout.activity_dictionary
         )
 
-        val termListFragment = TermListFragment()
-        supportFragmentManager.beginTransaction().add(R.id.dictionary_container, termListFragment)
-            .commit()
+        if (savedInstanceState == null) {
+            val termListFragment = TermListFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.dictionary_container, termListFragment).commit()
+        }
     }
 }
