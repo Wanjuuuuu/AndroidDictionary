@@ -14,11 +14,24 @@ import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TermDetailFragment(private val termId: Long) : Fragment() {
+class TermDetailFragment : Fragment() {
+
+    companion object {
+        private const val TERM_ID = "TERM_DETAIL_FRAGMENT_ID"
+
+        fun newInstance(termId: Long): Fragment {
+            val args = Bundle()
+            args.putLong(TERM_ID, termId)
+
+            val fragment = TermDetailFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     private lateinit var binding: FragmentTermDetailBinding
     private val viewModel: TermDetailViewModel by viewModels {
-        Injector.provideTermDetailViewModelFactory(requireContext(), termId)
+        Injector.provideTermDetailViewModelFactory(requireContext(), getTermId())
     }
     private val updatingTermRepository by lazy {
         Injector.getUpdatingTermRepository(requireContext())
@@ -46,7 +59,7 @@ class TermDetailFragment(private val termId: Long) : Fragment() {
         binding.bookmarkClickListener = View.OnClickListener {
             it.apply { isSelected = !isSelected }
             lifecycleScope.launch(Dispatchers.Default) {
-                updatingTermRepository.setTermBookmarked(termId, it.isSelected)
+                updatingTermRepository.setTermBookmarked(getTermId(), it.isSelected)
             }
         }
     }
@@ -54,7 +67,9 @@ class TermDetailFragment(private val termId: Long) : Fragment() {
     private fun updateDataAsync() {
         lifecycleScope.launch(Dispatchers.Default) {
             Injector.getUpdatingTermRepository(requireContext())
-                .updateTermDescriptionIfExpired(termId)
+                .updateTermDescriptionIfExpired(getTermId())
         }
     }
+
+    private fun getTermId(): Long = requireArguments().getLong(TERM_ID)
 }
