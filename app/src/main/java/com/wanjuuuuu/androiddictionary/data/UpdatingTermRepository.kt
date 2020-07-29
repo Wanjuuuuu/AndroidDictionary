@@ -1,6 +1,9 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import com.wanjuuuuu.androiddictionary.utils.TermScraper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 
 class UpdatingTermRepository private constructor(private val termDao: TermDao) {
 
@@ -16,16 +19,16 @@ class UpdatingTermRepository private constructor(private val termDao: TermDao) {
         }
     }
 
-    fun updateTermDescriptionIfExpired(termId: Long) {
+    suspend fun updateTermDescriptionIfExpired(termId: Long) {
         val term = termDao.getNaiveTerm(termId)
         if (term.needRescraping) {
-            term.description = TermScraper.getDescription(term.url)
+            term.description = withContext(Dispatchers.IO) { TermScraper.getDescription(term.url) }
             term.scrapedTime = System.currentTimeMillis()
             termDao.updateTerm(term)
         }
     }
 
-    fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
+    suspend fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
         termDao.updateTermBookmarked(termId, bookmarked)
     }
 }

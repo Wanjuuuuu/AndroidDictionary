@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TermDetailFragment : Fragment() {
@@ -58,14 +57,17 @@ class TermDetailFragment : Fragment() {
     private fun initBookmarkButton() {
         binding.bookmarkClickListener = View.OnClickListener {
             it.apply { isSelected = !isSelected }
-            lifecycleScope.launch(Dispatchers.Default) {
-                updatingTermRepository.setTermBookmarked(getTermId(), it.isSelected)
+            lifecycleScope.launch {
+                updatingTermRepository.setTermBookmarked(
+                    getTermId(),
+                    it.isSelected
+                )
             }
         }
     }
 
     private fun updateDataAsync() {
-        lifecycleScope.launch(Dispatchers.Default) {
+        lifecycleScope.launch {
             Injector.getUpdatingTermRepository(requireContext())
                 .updateTermDescriptionIfExpired(getTermId())
         }

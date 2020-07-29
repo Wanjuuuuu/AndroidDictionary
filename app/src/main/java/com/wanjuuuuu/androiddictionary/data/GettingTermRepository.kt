@@ -17,11 +17,11 @@ class GettingTermRepository private constructor(private val termDao: TermDao) {
     }
 
     fun getAllTerms(): LiveData<List<Term>> {
-        return termDao.getTerms()
+        return termDao.allTerms
     }
 
     fun getBookmarkedTerms(): LiveData<List<Term>> {
-        return termDao.getBookmarkedTerms()
+        return termDao.bookmarkedTerms
     }
 
     fun getTerm(termId: Long): LiveData<Term> {

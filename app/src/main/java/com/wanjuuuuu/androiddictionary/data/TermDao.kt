@@ -6,26 +6,26 @@ import androidx.room.*
 @Dao
 interface TermDao {
 
-    @Query("select * from terms order by id")
-    fun getTerms(): LiveData<List<Term>>
+    @get:Query("select * from terms order by id")
+    val allTerms: LiveData<List<Term>>
 
-    @Query("select * from terms where bookmarked = 1 order by id")
-    fun getBookmarkedTerms(): LiveData<List<Term>>
+    @get:Query("select * from terms where bookmarked = 1 order by id")
+    val bookmarkedTerms: LiveData<List<Term>>
 
     @Query("select * from terms where id = :id")
     fun getTerm(id: Long): LiveData<Term>
 
     @Query("select * from terms where id = :id")
-    fun getNaiveTerm(id: Long): Term
+    suspend fun getNaiveTerm(id: Long): Term
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTerms(terms: List<Term>)
+    suspend fun insertTerms(terms: List<Term>)
 
     @Update
-    fun updateTerm(term: Term)
+    suspend fun updateTerm(term: Term)
 
     @Query("update terms set bookmarked = :bookmarked where id = :id")
-    fun updateTermBookmarked(id: Long, bookmarked: Boolean)
+    suspend fun updateTermBookmarked(id: Long, bookmarked: Boolean)
 
     @Delete
     fun deleteTerm(term: Term)
