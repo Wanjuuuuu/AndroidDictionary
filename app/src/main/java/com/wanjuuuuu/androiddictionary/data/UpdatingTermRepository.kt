@@ -22,9 +22,9 @@ class UpdatingTermRepository private constructor(private val termDao: TermDao) {
     suspend fun updateTermDescriptionIfExpired(termId: Long) {
         val term = termDao.getNaiveTerm(termId)
         if (term.needRescraping) {
-            term.description = withContext(Dispatchers.IO) { TermScraper.getDescription(term.url) }
-            term.scrapedTime = System.currentTimeMillis()
-            termDao.updateTerm(term)
+            val description = withContext(Dispatchers.IO) { TermScraper.getDescription(term.url) }
+            val scrapedTime = System.currentTimeMillis()
+            termDao.updateTerm(termId, description, scrapedTime)
         }
     }
 

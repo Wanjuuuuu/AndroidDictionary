@@ -21,8 +21,8 @@ interface TermDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTerms(terms: List<Term>)
 
-    @Update
-    suspend fun updateTerm(term: Term)
+    @Query("update terms set description = :description, scrapedTime = :scrapedTime where id = :id")
+    suspend fun updateTerm(id: Long, description: String, scrapedTime: Long)
 
     @Query("update terms set bookmarked = :bookmarked where id = :id")
     suspend fun updateTermBookmarked(id: Long, bookmarked: Boolean)
