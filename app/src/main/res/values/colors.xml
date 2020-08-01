@@ -8,7 +8,9 @@
 
     <color name="outer_background">#ffefefef</color>
     <color name="inner_background">#ffffffff</color>
+
     <color name="ripple_item_term">#fff3f3f3</color>
+    <color name="ripple_bookmark">#fffdb7fb</color>
 
     <color name="bookmark_normal">#ffe6e6e6</color>
     <color name="bookmark_selected">#fffa6df5</color>
