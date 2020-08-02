@@ -20,9 +20,6 @@
     <dimen name="detail_bookmark_height">24dp</dimen>
     <dimen name="detail_title_textSize">24sp</dimen>
     <integer name="detail_title_maxLines">2</integer>
-    <dimen name="detail_date_marginTop">8dp</dimen>
-    <dimen name="detail_date_marginEnd">10dp</dimen>
-    <dimen name="detail_date_textSize">14sp</dimen>
     <dimen name="detail_content_textSize">14sp</dimen>
     <dimen name="detail_content_lineSpacingExtra">4dp</dimen>
     <dimen name="detail_content_paddingStart">16dp</dimen>

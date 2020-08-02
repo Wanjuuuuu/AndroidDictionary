@@ -2,8 +2,6 @@ package com.wanjuuuuu.androiddictionary.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Entity(tableName = "terms")
 data class Term(
