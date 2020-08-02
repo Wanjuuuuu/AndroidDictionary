@@ -6,4 +6,5 @@ import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
 class TermDetailViewModel(gettingTermRepository: GettingTermRepository, termId: Long) :
     ViewModel() {
     val term = gettingTermRepository.getTerm(termId)
+    var isRefreshing = false
 }

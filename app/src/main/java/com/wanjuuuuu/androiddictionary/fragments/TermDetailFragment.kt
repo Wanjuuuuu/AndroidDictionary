@@ -29,7 +29,7 @@ class TermDetailFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentTermDetailBinding
-    private val viewModel: TermDetailViewModel by viewModels {
+    private val termDetailViewModel: TermDetailViewModel by viewModels {
         Injector.provideTermDetailViewModelFactory(requireContext(), getTermId())
     }
     private val updatingTermRepository by lazy {
@@ -41,17 +41,15 @@ class TermDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTermDetailBinding.inflate(inflater, container, false)
-        observeData()
+        binding = FragmentTermDetailBinding.inflate(inflater, container, false).apply {
+            viewModel = termDetailViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         initBookmarkButton()
 
         updateDataAsync()
 
         return binding.root
-    }
-
-    private fun observeData() {
-        viewModel.term.observe(viewLifecycleOwner, Observer { result -> binding.term = result })
     }
 
     private fun initBookmarkButton() {

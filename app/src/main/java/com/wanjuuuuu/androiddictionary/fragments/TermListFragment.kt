@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
-    private val viewModel: TermListViewModel by viewModels {
+    private val termListViewModel: TermListViewModel by viewModels {
         Injector.provideTermListViewModelFactory(this)
     }
     private val updatingTermRepository by lazy {
@@ -49,7 +49,7 @@ class TermListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_bookmark -> {
-                viewModel.reverseFilter()
+                termListViewModel.reverseFilter()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -61,7 +61,7 @@ class TermListFragment : Fragment() {
     }
 
     private fun observeData(adapter: TermAdapter) {
-        viewModel.terms.observe(
+        termListViewModel.terms.observe(
             viewLifecycleOwner,
             Observer { result -> adapter.submitList(result) })
     }
