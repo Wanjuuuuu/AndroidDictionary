@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.wanjuuuuu.androiddictionary.databinding.ActivityDictionaryBinding
-import com.wanjuuuuu.androiddictionary.fragments.TermListFragment
 
 class DictionaryActivity : AppCompatActivity() {
 
@@ -14,11 +13,5 @@ class DictionaryActivity : AppCompatActivity() {
             this,
             R.layout.activity_dictionary
         )
-
-        if (savedInstanceState == null) {
-            val termListFragment = TermListFragment()
-            supportFragmentManager.beginTransaction()
-                .add(R.id.dictionary_container, termListFragment).commit()
-        }
     }
 }

@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
-import com.wanjuuuuu.androiddictionary.data.Term
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
@@ -33,8 +32,7 @@ class TermListFragment : Fragment() {
         setUpFragment()
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
-        val termAdapter = TermAdapter({ term -> onClickTermItem(term) },
-            { id, bookmarked -> onClickBookmark(id, bookmarked) })
+        val termAdapter = TermAdapter { id, bookmarked -> onClickBookmark(id, bookmarked) }
         binding.termList.adapter = termAdapter
 
         observeData(termAdapter)
@@ -64,14 +62,6 @@ class TermListFragment : Fragment() {
         termListViewModel.terms.observe(
             viewLifecycleOwner,
             Observer { result -> adapter.submitList(result) })
-    }
-
-    private fun onClickTermItem(term: Term) {
-        val termDetailFragment = TermDetailFragment.newInstance(term.id)
-        requireActivity().supportFragmentManager.beginTransaction().apply {
-            replace(R.id.dictionary_container, termDetailFragment)
-            addToBackStack(null)
-        }.commit()
     }
 
     private fun onClickBookmark(id: Long, bookmarked: Boolean) {
