@@ -3,7 +3,6 @@ package com.wanjuuuuu.androiddictionary.data
 import com.wanjuuuuu.androiddictionary.utils.TermScraper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.yield
 
 class UpdatingTermRepository private constructor(private val termDao: TermDao) {
 
@@ -19,13 +18,10 @@ class UpdatingTermRepository private constructor(private val termDao: TermDao) {
         }
     }
 
-    suspend fun updateTermDescriptionIfExpired(termId: Long) {
-        val term = termDao.getNaiveTerm(termId)
-        if (term.needRescraping) {
-            val description = withContext(Dispatchers.IO) { TermScraper.getDescription(term.url) }
-            val scrapedTime = System.currentTimeMillis()
-            termDao.updateTerm(termId, description, scrapedTime)
-        }
+    suspend fun refreshTermDescription(term: Term) {
+        val description = withContext(Dispatchers.IO) { TermScraper.getDescription(term.url) }
+        val scrapedTime = System.currentTimeMillis()
+        termDao.updateTerm(term.id, description, scrapedTime)
     }
 
     suspend fun setTermBookmarked(termId: Long, bookmarked: Boolean) {

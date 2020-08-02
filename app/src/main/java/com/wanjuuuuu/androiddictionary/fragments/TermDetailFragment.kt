@@ -47,7 +47,7 @@ class TermDetailFragment : Fragment() {
         }
         initBookmarkButton()
 
-        updateDataAsync()
+        observeDataRefresher()
 
         return binding.root
     }
@@ -64,10 +64,15 @@ class TermDetailFragment : Fragment() {
         }
     }
 
-    private fun updateDataAsync() {
-        lifecycleScope.launch {
-            Injector.getUpdatingTermRepository(requireContext())
-                .updateTermDescriptionIfExpired(getTermId())
+    private fun observeDataRefresher() {
+        termDetailViewModel.run {
+            term.observe(
+                viewLifecycleOwner,
+                Observer {
+                    launchDataRefreshIfNeeded {
+                        if (it != null) updatingTermRepository.refreshTermDescription(it)
+                    }
+                })
         }
     }
 
