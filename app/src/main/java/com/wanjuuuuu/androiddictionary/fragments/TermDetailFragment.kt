@@ -57,7 +57,7 @@ class TermDetailFragment : Fragment() {
                 viewLifecycleOwner,
                 Observer {
                     launchDataRefreshIfNeeded {
-                        if (it != null) updatingTermRepository.refreshTermDescription(it)
+                        it?.let { updatingTermRepository.refreshTermDescription(it) }
                     }
                 })
         }

@@ -30,9 +30,8 @@ class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -
     inner class TermViewHolder(private val binding: ListItemTermBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.itemClickListener = View.OnClickListener {
-                navigateToDetail(it, binding.term!!)
-            }
+            binding.itemClickListener =
+                View.OnClickListener { view -> binding.term?.let { navigateToDetail(view, it) } }
         }
 
         private fun navigateToDetail(view: View, term: Term) {
