@@ -4,13 +4,13 @@
     <item android:state_pressed="true">
         <set>
             <objectAnimator
-                android:duration="300"
+                android:duration="@integer/bookmark_duration"
                 android:propertyName="scaleX"
                 android:valueTo="1.2"
                 android:valueType="floatType" />
 
             <objectAnimator
-                android:duration="300"
+                android:duration="@integer/bookmark_duration"
                 android:propertyName="scaleY"
                 android:valueTo="1.2"
                 android:valueType="floatType" />
@@ -20,13 +20,13 @@
     <item>
         <set>
             <objectAnimator
-                android:duration="300"
+                android:duration="@integer/bookmark_duration"
                 android:propertyName="scaleX"
                 android:valueTo="1"
                 android:valueType="floatType" />
 
             <objectAnimator
-                android:duration="300"
+                android:duration="@integer/bookmark_duration"
                 android:propertyName="scaleY"
                 android:valueTo="1"
                 android:valueType="floatType" />
