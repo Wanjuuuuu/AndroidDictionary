@@ -1,9 +1,9 @@
 # AndroidDictionary
 
-##Introduction
+## Introduction
 A Pocket Dictionary of Android APIs from [Android Developers Documentation](https://developer.android.com/reference)
 
-##With
+## With
 Practice these with reference to [Sunflower](https://github.com/android/sunflower)
 * Kotlin
 * Coroutine [Codelab1](https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0), [Codelab2](https://codelabs.developers.google.com/codelabs/advanced-kotlin-coroutines/index.html#0)
