@@ -6,16 +6,16 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.lang.Exception
 
-object TermScraper {
+object ReferenceParser {
 
     private const val TAG = "TermScraper"
     private const val SELECTOR =
         "#jd-content > p, #jd-content > h3, #jd-content > ol, #jd-content > ul"
 
-    fun getDescription(url: String): String {
+    fun getDescription(body: String): String {
         var description = ""
         try {
-            val document = Jsoup.connect("$ANDROID_REFERENCE_BASE_URL$url").get()
+            val document = Jsoup.parse(body)
             val elements = document.body().select(SELECTOR)
             description = parseDescription(elements)
         } catch (e: Exception) {

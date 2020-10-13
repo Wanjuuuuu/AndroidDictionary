@@ -1,7 +1,7 @@
 package com.wanjuuuuu.androiddictionary.api
 
 import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
-import com.wanjuuuuu.androiddictionary.utils.TermScraper
+import com.wanjuuuuu.androiddictionary.utils.ReferenceParser
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Response
@@ -41,6 +41,6 @@ class ReferenceConverter : Converter<ResponseBody, String> {
     }
 
     override fun convert(value: ResponseBody): String? {
-        return TermScraper.getDescription(value.string())
+        return ReferenceParser.getDescription(value.string())
     }
 }

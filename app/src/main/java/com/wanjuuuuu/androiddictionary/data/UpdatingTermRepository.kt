@@ -1,7 +1,7 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
-import com.wanjuuuuu.androiddictionary.utils.TermScraper
+import com.wanjuuuuu.androiddictionary.utils.ReferenceParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -29,9 +29,10 @@ class UpdatingTermRepository private constructor(
     }
 
     suspend fun refreshTermDescription(term: Term) {
-        val description = withContext(Dispatchers.IO) { TermScraper.getDescription(term.url) }
-        val scrapedTime = System.currentTimeMillis()
-        termDao.updateTerm(term.id, description, scrapedTime)
+        val description = withContext(Dispatchers.IO) {
+            androidReferenceService.getReferencePage(term.url).body()
+        }
+        description?.let { termDao.updateTerm(term.id, it, System.currentTimeMillis()) }
     }
 
     suspend fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
