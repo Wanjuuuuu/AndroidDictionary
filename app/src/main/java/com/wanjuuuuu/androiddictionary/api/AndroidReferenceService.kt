@@ -13,7 +13,7 @@ import java.lang.reflect.Type
 interface AndroidReferenceService {
 
     @GET("{path}")
-    suspend fun getReferencePage(@Path("path") path: String): Response<String>
+    suspend fun getReferencePage(@Path("path") path: String): String
 
     companion object {
 

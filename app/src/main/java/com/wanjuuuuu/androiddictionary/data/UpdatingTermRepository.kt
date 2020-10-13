@@ -28,9 +28,7 @@ class UpdatingTermRepository private constructor(
     }
 
     suspend fun refreshTermDescription(term: Term) {
-        val description = withContext(Dispatchers.IO) {
-            androidReferenceService.getReferencePage(term.url).body()
-        }
+        val description = androidReferenceService.getReferencePage(term.url)
         description?.let { termDao.updateTerm(term.id, it, System.currentTimeMillis()) }
     }
 
