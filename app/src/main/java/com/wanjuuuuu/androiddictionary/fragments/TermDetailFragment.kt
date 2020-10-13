@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
@@ -35,19 +36,27 @@ class TermDetailFragment : Fragment() {
             viewModel = termDetailViewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        initBookmarkButton()
+        initBookmarkClickListener()
+        initTitleClickListener()
 
         observeDataRefresher()
 
         return binding.root
     }
 
-    private fun initBookmarkButton() {
+    private fun initBookmarkClickListener() {
         binding.bookmarkClickListener = View.OnClickListener {
             it.apply { isSelected = !isSelected }
             lifecycleScope.launch {
                 updatingTermRepository.setTermBookmarked(args.termId, it.isSelected)
             }
+        }
+    }
+
+    private fun initTitleClickListener() {
+        binding.termTitleClickListener = View.OnClickListener {
+            val action = TermDetailFragmentDirections.actionTermDetailFragmentToTermPageFragment()
+            findNavController().navigate(action)
         }
     }
 

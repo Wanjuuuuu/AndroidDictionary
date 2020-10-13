@@ -22,8 +22,20 @@
         android:id="@+id/term_detail_fragment"
         android:name="com.wanjuuuuu.androiddictionary.fragments.TermDetailFragment"
         tools:layout="@layout/fragment_term_detail">
+        <action
+            android:id="@+id/action_term_detail_fragment_to_term_page_fragment"
+            app:destination="@+id/term_page_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="termId"
             app:argType="long" />
     </fragment>
+
+    <fragment
+        android:id="@+id/term_page_fragment"
+        android:name="com.wanjuuuuu.androiddictionary.fragments.TermPageFragment"
+        tools:layout="@layout/fragment_term_detail" />
 </navigation>
