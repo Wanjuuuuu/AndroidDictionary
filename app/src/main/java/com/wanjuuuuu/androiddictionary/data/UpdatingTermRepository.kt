@@ -1,19 +1,29 @@
 package com.wanjuuuuu.androiddictionary.data
 
+import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
 import com.wanjuuuuu.androiddictionary.utils.TermScraper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UpdatingTermRepository private constructor(private val termDao: TermDao) {
+class UpdatingTermRepository private constructor(
+    private val termDao: TermDao,
+    private val androidReferenceService: AndroidReferenceService
+) {
 
     companion object {
         @Volatile
         private var instance: UpdatingTermRepository? = null
 
         @JvmStatic
-        fun getInstance(termDao: TermDao): UpdatingTermRepository {
+        fun getInstance(
+            termDao: TermDao,
+            androidReferenceService: AndroidReferenceService
+        ): UpdatingTermRepository {
             return instance ?: synchronized(this) {
-                instance ?: UpdatingTermRepository(termDao).also { instance = it }
+                instance ?: UpdatingTermRepository(
+                    termDao,
+                    androidReferenceService
+                ).also { instance = it }
             }
         }
     }

@@ -2,6 +2,7 @@ package com.wanjuuuuu.androiddictionary.utils
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
 import com.wanjuuuuu.androiddictionary.data.AppDatabase
 import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
 import com.wanjuuuuu.androiddictionary.data.UpdatingTermRepository
@@ -26,7 +27,8 @@ object Injector {
 
     fun getUpdatingTermRepository(context: Context): UpdatingTermRepository {
         return UpdatingTermRepository.getInstance(
-            AppDatabase.getInstance(context.applicationContext).termDao()
+            AppDatabase.getInstance(context.applicationContext).termDao(),
+            AndroidReferenceService.create()
         )
     }
 
