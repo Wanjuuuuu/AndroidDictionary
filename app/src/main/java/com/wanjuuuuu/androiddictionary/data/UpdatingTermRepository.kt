@@ -1,7 +1,6 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
-import com.wanjuuuuu.androiddictionary.utils.ReferenceParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
