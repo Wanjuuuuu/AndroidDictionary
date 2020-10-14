@@ -37,5 +37,9 @@
     <fragment
         android:id="@+id/term_page_fragment"
         android:name="com.wanjuuuuu.androiddictionary.fragments.TermPageFragment"
-        tools:layout="@layout/fragment_term_detail" />
+        tools:layout="@layout/fragment_term_page">
+        <argument
+            android:name="termUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

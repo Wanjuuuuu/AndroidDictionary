@@ -55,8 +55,12 @@ class TermDetailFragment : Fragment() {
 
     private fun initTitleClickListener() {
         binding.termTitleClickListener = View.OnClickListener {
-            val action = TermDetailFragmentDirections.actionTermDetailFragmentToTermPageFragment()
-            findNavController().navigate(action)
+            val term = termDetailViewModel.term.value
+            term?.let {
+                val action =
+                    TermDetailFragmentDirections.actionTermDetailFragmentToTermPageFragment(it.url)
+                findNavController().navigate(action)
+            }
         }
     }
 
