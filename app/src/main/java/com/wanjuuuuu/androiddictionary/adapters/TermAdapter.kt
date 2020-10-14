@@ -43,7 +43,7 @@ class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -
         fun bind(item: Term) {
             binding.term = item
             binding.bookmarkClickListener = View.OnClickListener {
-                it.apply { isSelected = !isSelected }
+                it.run { isSelected = !isSelected }
                 onClickBookmark(item.id, it.isSelected)
             }
         }

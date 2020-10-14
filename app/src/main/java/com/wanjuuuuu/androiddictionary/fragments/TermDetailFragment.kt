@@ -46,7 +46,7 @@ class TermDetailFragment : Fragment() {
 
     private fun initBookmarkClickListener() {
         binding.bookmarkClickListener = View.OnClickListener {
-            it.apply { isSelected = !isSelected }
+            it.run { isSelected = !isSelected }
             lifecycleScope.launch {
                 updatingTermRepository.setTermBookmarked(args.termId, it.isSelected)
             }
@@ -56,9 +56,9 @@ class TermDetailFragment : Fragment() {
     private fun initTitleClickListener() {
         binding.termTitleClickListener = View.OnClickListener {
             val term = termDetailViewModel.term.value
-            term?.let {
+            term?.run {
                 val action =
-                    TermDetailFragmentDirections.actionTermDetailFragmentToTermPageFragment(it.url)
+                    TermDetailFragmentDirections.actionTermDetailFragmentToTermPageFragment(url)
                 findNavController().navigate(action)
             }
         }

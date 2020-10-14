@@ -1,8 +1,6 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class UpdatingTermRepository private constructor(
     private val termDao: TermDao,
@@ -28,8 +26,9 @@ class UpdatingTermRepository private constructor(
     }
 
     suspend fun refreshTermDescription(term: Term) {
-        val description = androidReferenceService.getReferencePage(term.url)
-        description?.let { termDao.updateTerm(term.id, it, System.currentTimeMillis()) }
+        androidReferenceService.getReferencePage(term.url).let {
+            termDao.updateTerm(term.id, it, System.currentTimeMillis())
+        }
     }
 
     suspend fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
