@@ -7,16 +7,13 @@ import androidx.work.WorkerParameters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
+import com.wanjuuuuu.androiddictionary.utils.TAG
 import com.wanjuuuuu.androiddictionary.utils.TERM_DATA_FILENAME
 import kotlinx.coroutines.coroutineScope
 import java.lang.Exception
 
 class DataPopulator(context: Context, workerParameters: WorkerParameters) :
     CoroutineWorker(context, workerParameters) {
-
-    companion object {
-        const val TAG = "DataPopulator"
-    }
 
     override suspend fun doWork(): Result = coroutineScope {
         try {

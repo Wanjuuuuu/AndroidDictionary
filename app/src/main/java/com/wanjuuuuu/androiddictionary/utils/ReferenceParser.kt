@@ -8,7 +8,6 @@ import java.lang.Exception
 
 object ReferenceParser {
 
-    private const val TAG = "TermScraper"
     private const val SELECTOR =
         "#jd-content > p, #jd-content > h3, #jd-content > ol, #jd-content > ul"
 
