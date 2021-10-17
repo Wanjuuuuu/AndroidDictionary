@@ -1,19 +1,25 @@
 package com.wanjuuuuu.androiddictionary.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
+import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
 import kotlinx.coroutines.launch
+
 
 class TermDetailFragment : Fragment() {
 
@@ -55,12 +61,27 @@ class TermDetailFragment : Fragment() {
 
     private fun initTitleClickListener() {
         binding.termTitleClickListener = View.OnClickListener {
-            val term = termDetailViewModel.term.value
-            term?.run {
-                val action =
-                    TermDetailFragmentDirections.actionTermDetailFragmentToTermPageFragment(url)
-                findNavController().navigate(action)
+            val term = termDetailViewModel.term.value ?: return@OnClickListener
+
+            val defaultColors = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(
+                    ResourcesCompat.getColor(
+                        requireContext().resources,
+                        R.color.colorPrimary,
+                        null
+                    )
+                )
+                .build()
+
+            val customTabsIntent = with(CustomTabsIntent.Builder()) {
+                setStartAnimations(requireContext(), R.anim.slide_in_right, R.anim.slide_out_left)
+                setExitAnimations(requireContext(), R.anim.slide_in_left, R.anim.slide_out_right)
+                setDefaultColorSchemeParams(defaultColors)
+                build()
             }
+
+            val fullUrl = "$ANDROID_REFERENCE_BASE_URL${term.url}"
+            customTabsIntent.launchUrl(requireContext(), Uri.parse(fullUrl))
         }
     }
 
