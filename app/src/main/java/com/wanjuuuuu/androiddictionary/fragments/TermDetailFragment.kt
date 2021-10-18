@@ -62,26 +62,35 @@ class TermDetailFragment : Fragment() {
     private fun initTitleClickListener() {
         binding.termTitleClickListener = View.OnClickListener {
             val term = termDetailViewModel.term.value ?: return@OnClickListener
-
-            val defaultColors = CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(
-                    ResourcesCompat.getColor(
-                        requireContext().resources,
-                        R.color.colorPrimary,
-                        null
-                    )
-                )
-                .build()
-
-            val customTabsIntent = with(CustomTabsIntent.Builder()) {
-                setStartAnimations(requireContext(), R.anim.slide_in_right, R.anim.slide_out_left)
-                setExitAnimations(requireContext(), R.anim.slide_in_left, R.anim.slide_out_right)
-                setDefaultColorSchemeParams(defaultColors)
-                build()
-            }
-
             val fullUrl = "$ANDROID_REFERENCE_BASE_URL${term.url}"
-            customTabsIntent.launchUrl(requireContext(), Uri.parse(fullUrl))
+            launchCustomTabs(fullUrl)
+        }
+    }
+
+    private fun launchCustomTabs(url: String) {
+        val customTabsIntent = buildCustomTabsIntent()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
+    }
+
+    private fun buildCustomTabsIntent(): CustomTabsIntent {
+        return with(CustomTabsIntent.Builder()) {
+            setStartAnimations(requireContext(), R.anim.slide_in_right, R.anim.slide_out_left)
+            setExitAnimations(requireContext(), R.anim.slide_in_left, R.anim.slide_out_right)
+            setDefaultColorSchemeParams(buildCustomTabColorSchemeParams())
+            build()
+        }
+    }
+
+    private fun buildCustomTabColorSchemeParams(): CustomTabColorSchemeParams {
+        return with(CustomTabColorSchemeParams.Builder()) {
+            setToolbarColor(
+                ResourcesCompat.getColor(
+                    requireContext().resources,
+                    R.color.colorPrimary,
+                    null
+                )
+            )
+            build()
         }
     }
 
