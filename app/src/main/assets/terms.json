@@ -84,8 +84,8 @@
     "url": "android/view/SurfaceView"
   },
   {
-  "name": "LayoutInflater",
-  "url": "android/view/LayoutInflater"
+    "name": "LayoutInflater",
+    "url": "android/view/LayoutInflater"
   },
   {
     "name": "ViewStub",
