@@ -20,10 +20,6 @@
     "category": "android/app"
   },
   {
-    "name": "ActionBar",
-    "category": "android/app"
-  },
-  {
     "name": "Dialog",
     "category": "android/app"
   },
