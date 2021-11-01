@@ -10,7 +10,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.wanjuuuuu.androiddictionary.utils.DATABASE_NAME
 
-@Database(entities = [Term::class], version = 2, exportSchema = false)
+@Database(entities = [Term::class], version = 2, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun termDao(): TermDao
