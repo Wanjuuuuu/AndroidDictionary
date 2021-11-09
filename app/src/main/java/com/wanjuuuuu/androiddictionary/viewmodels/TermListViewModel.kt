@@ -1,10 +1,10 @@
 package com.wanjuuuuu.androiddictionary.viewmodels
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.*
 import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
+import com.wanjuuuuu.androiddictionary.data.Term
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class TermListViewModel(
     gettingTermRepository: GettingTermRepository,
@@ -18,6 +18,12 @@ class TermListViewModel(
     val terms = isFilteredByBookmark().switchMap {
         if (it) gettingTermRepository.getBookmarkedTerms()
         else gettingTermRepository.getAllTerms()
+    }
+
+    suspend fun launchTermsInCategory(): Map<String, List<Term>> {
+        return withContext(Dispatchers.Default) {
+            terms.value?.groupBy { it.category } ?: hashMapOf()
+        }
     }
 
     fun reverseFilter() {

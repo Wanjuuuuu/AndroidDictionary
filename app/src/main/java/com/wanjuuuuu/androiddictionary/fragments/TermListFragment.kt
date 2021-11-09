@@ -1,6 +1,7 @@
 package com.wanjuuuuu.androiddictionary.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,6 +11,7 @@ import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
+import com.wanjuuuuu.androiddictionary.utils.TAG
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,9 +61,17 @@ class TermListFragment : Fragment() {
     }
 
     private fun observeData(adapter: TermAdapter) {
-        termListViewModel.terms.observe(
-            viewLifecycleOwner,
-            Observer { result -> adapter.submitList(result) })
+        termListViewModel.run {
+            terms.observe(viewLifecycleOwner, Observer { result ->
+                adapter.submitList(result)
+
+                //trial
+                lifecycleScope.launch {
+                    val termsInCategory = launchTermsInCategory()
+                    Log.d(TAG, "termsInCategory = $termsInCategory")
+                }
+            })
+        }
     }
 
     private fun onClickBookmark(id: Long, bookmarked: Boolean) {
