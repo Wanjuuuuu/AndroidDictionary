@@ -1,12 +1,14 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class UpdatingTermRepository private constructor(
     private val termDao: TermDao,
-    private val androidReferenceService: AndroidReferenceService
+    private val androidReferenceService: AndroidReferenceService,
+    private val dispatcher: CoroutineDispatcher
 ) {
 
     companion object {
@@ -16,12 +18,14 @@ class UpdatingTermRepository private constructor(
         @JvmStatic
         fun getInstance(
             termDao: TermDao,
-            androidReferenceService: AndroidReferenceService
+            androidReferenceService: AndroidReferenceService,
+            dispatcher: CoroutineDispatcher = Dispatchers.Default
         ): UpdatingTermRepository {
             return instance ?: synchronized(this) {
                 instance ?: UpdatingTermRepository(
                     termDao,
-                    androidReferenceService
+                    androidReferenceService,
+                    dispatcher
                 ).also { instance = it }
             }
         }
@@ -34,7 +38,7 @@ class UpdatingTermRepository private constructor(
     }
 
     suspend fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
-        withContext(Dispatchers.Default) {
+        withContext(dispatcher) {
             termDao.updateTermBookmarked(termId, bookmarked)
         }
     }
