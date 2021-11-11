@@ -1,29 +1,21 @@
 package com.wanjuuuuu.androiddictionary.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
-import com.wanjuuuuu.androiddictionary.utils.TAG
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
     private val termListViewModel: TermListViewModel by viewModels {
         Injector.provideTermListViewModelFactory(this)
-    }
-    private val updatingTermRepository by lazy {
-        Injector.getUpdatingTermRepository(requireContext())
     }
 
     override fun onCreateView(
@@ -64,19 +56,12 @@ class TermListFragment : Fragment() {
         termListViewModel.run {
             terms.observe(viewLifecycleOwner, Observer { result ->
                 adapter.submitList(result)
-
-                //trial
-                lifecycleScope.launch {
-                    val termsInCategory = launchTermsInCategory()
-                    Log.d(TAG, "termsInCategory = $termsInCategory")
-                }
+                result?.let { categorizeTerms(it) }
             })
         }
     }
 
     private fun onClickBookmark(id: Long, bookmarked: Boolean) {
-        lifecycleScope.launch(Dispatchers.Default) {
-            updatingTermRepository.setTermBookmarked(id, bookmarked)
-        }
+        termListViewModel.updateBookmark(id, bookmarked)
     }
 }

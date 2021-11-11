@@ -1,13 +1,16 @@
 package com.wanjuuuuu.androiddictionary.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
 import com.wanjuuuuu.androiddictionary.data.Term
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.wanjuuuuu.androiddictionary.data.UpdatingTermRepository
+import com.wanjuuuuu.androiddictionary.utils.TAG
+import kotlinx.coroutines.launch
 
 class TermListViewModel(
-    gettingTermRepository: GettingTermRepository,
+    private val gettingTermRepository: GettingTermRepository,
+    private val updatingTermRepository: UpdatingTermRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -20,9 +23,16 @@ class TermListViewModel(
         else gettingTermRepository.getAllTerms()
     }
 
-    suspend fun launchTermsInCategory(): Map<String, List<Term>> {
-        return withContext(Dispatchers.Default) {
-            terms.value?.groupBy { it.category } ?: hashMapOf()
+    fun categorizeTerms(terms: List<Term>) {
+        viewModelScope.launch {
+            val termsInCategory = terms.let { gettingTermRepository.categorize(it) }
+            Log.d(TAG, "termsInCategory = $termsInCategory")
+        }
+    }
+
+    fun updateBookmark(id: Long, bookmarked: Boolean) {
+        viewModelScope.launch {
+            updatingTermRepository.setTermBookmarked(id, bookmarked)
         }
     }
 

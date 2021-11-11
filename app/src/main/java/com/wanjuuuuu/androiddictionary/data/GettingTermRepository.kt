@@ -1,6 +1,8 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class GettingTermRepository private constructor(private val termDao: TermDao) {
 
@@ -22,6 +24,11 @@ class GettingTermRepository private constructor(private val termDao: TermDao) {
 
     fun getBookmarkedTerms(): LiveData<List<Term>> {
         return termDao.bookmarkedTerms
+    }
+
+    suspend fun categorize(terms: List<Term>): Map<String, List<Term>> {
+        // TODO: flow
+        return withContext(Dispatchers.Default) { terms.groupBy { it.category } }
     }
 
     fun getTerm(termId: Long): LiveData<Term> {

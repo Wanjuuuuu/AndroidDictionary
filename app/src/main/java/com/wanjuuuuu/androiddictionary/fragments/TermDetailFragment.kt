@@ -11,24 +11,18 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
 import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel
-import kotlinx.coroutines.launch
-
 
 class TermDetailFragment : Fragment() {
 
     private val args: TermDetailFragmentArgs by navArgs()
     private val termDetailViewModel: TermDetailViewModel by viewModels {
         Injector.provideTermDetailViewModelFactory(requireContext(), args.termId)
-    }
-    private val updatingTermRepository by lazy {
-        Injector.getUpdatingTermRepository(requireContext())
     }
 
     private lateinit var binding: FragmentTermDetailBinding
@@ -53,10 +47,12 @@ class TermDetailFragment : Fragment() {
     private fun initBookmarkClickListener() {
         binding.bookmarkClickListener = View.OnClickListener {
             it.run { isSelected = !isSelected }
-            lifecycleScope.launch {
-                updatingTermRepository.setTermBookmarked(args.termId, it.isSelected)
-            }
+            onClickBookmark(args.termId, it.isSelected)
         }
+    }
+
+    private fun onClickBookmark(id: Long, bookmarked: Boolean) {
+        termDetailViewModel.updateBookmark(id, bookmarked)
     }
 
     private fun initTitleClickListener() {
@@ -96,13 +92,7 @@ class TermDetailFragment : Fragment() {
 
     private fun observeDataRefresher() {
         termDetailViewModel.run {
-            term.observe(
-                viewLifecycleOwner,
-                Observer {
-                    launchDataRefreshIfNeeded {
-                        it?.let { updatingTermRepository.refreshTermDescription(it) }
-                    }
-                })
+            term.observe(viewLifecycleOwner, Observer { it?.let { launchDataRefreshIfNeeded(it) } })
         }
     }
 }

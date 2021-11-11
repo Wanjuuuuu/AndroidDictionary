@@ -1,6 +1,8 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import com.wanjuuuuu.androiddictionary.api.AndroidReferenceService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class UpdatingTermRepository private constructor(
     private val termDao: TermDao,
@@ -32,6 +34,8 @@ class UpdatingTermRepository private constructor(
     }
 
     suspend fun setTermBookmarked(termId: Long, bookmarked: Boolean) {
-        termDao.updateTermBookmarked(termId, bookmarked)
+        withContext(Dispatchers.Default) {
+            termDao.updateTermBookmarked(termId, bookmarked)
+        }
     }
 }

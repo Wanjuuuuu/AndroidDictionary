@@ -6,9 +6,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
+import com.wanjuuuuu.androiddictionary.data.UpdatingTermRepository
 
 class TermListViewModelFactory(
     private val gettingTermRepository: GettingTermRepository,
+    private val updatingTermRepository: UpdatingTermRepository,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -19,6 +21,6 @@ class TermListViewModelFactory(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
-        return TermListViewModel(gettingTermRepository, handle) as T
+        return TermListViewModel(gettingTermRepository, updatingTermRepository, handle) as T
     }
 }
