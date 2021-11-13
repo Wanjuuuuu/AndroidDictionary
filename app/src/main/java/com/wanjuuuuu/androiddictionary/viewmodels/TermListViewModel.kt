@@ -23,12 +23,7 @@ class TermListViewModel(
         else gettingTermRepository.getAllTerms()
     }
 
-    fun categorizeTerms(terms: List<Term>) {
-        viewModelScope.launch {
-            val termsInCategory = terms.let { gettingTermRepository.categorize(it) }
-            Log.d(TAG, "termsInCategory = $termsInCategory")
-        }
-    }
+    val categorizedTerms = terms.switchMap { gettingTermRepository.getCategorizedTerms(it) }
 
     fun updateBookmark(id: Long, bookmarked: Boolean) {
         viewModelScope.launch {

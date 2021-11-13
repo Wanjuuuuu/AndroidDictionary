@@ -24,7 +24,7 @@ data class Term(
         get() = "$category/$name"
 
     override fun toString(): String {
-        return "id=$id\nurl=$url\ndescription=$description\nscrapedTime=$scrapedTime\nbookmarked=$bookmarked"
+        return "id=$id\nurl=$url\nscrapedTime=$scrapedTime\nbookmarked=$bookmarked"
     }
 
     companion object {

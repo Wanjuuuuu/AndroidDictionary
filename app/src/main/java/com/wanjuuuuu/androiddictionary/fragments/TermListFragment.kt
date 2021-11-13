@@ -1,6 +1,7 @@
 package com.wanjuuuuu.androiddictionary.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,6 +10,7 @@ import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
+import com.wanjuuuuu.androiddictionary.utils.TAG
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
 
 class TermListFragment : Fragment() {
@@ -54,10 +56,8 @@ class TermListFragment : Fragment() {
 
     private fun observeData(adapter: TermAdapter) {
         termListViewModel.run {
-            terms.observe(viewLifecycleOwner, Observer { result ->
-                adapter.submitList(result)
-                result?.let { categorizeTerms(it) }
-            })
+            terms.observe(viewLifecycleOwner, Observer { result -> adapter.submitList(result) })
+            categorizedTerms.observe(viewLifecycleOwner, Observer { Log.d(TAG, "$it") })
         }
     }
 
