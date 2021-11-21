@@ -11,7 +11,7 @@
 
         <variable
             name="term"
-            type="com.wanjuuuuu.androiddictionary.data.Term" />
+            type="com.wanjuuuuu.androiddictionary.data.TermListItem" />
 
         <variable
             name="bookmarkClickListener"

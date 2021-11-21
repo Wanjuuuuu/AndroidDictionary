@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TermDao {
 
-    @get:Query("select * from terms order by id")
-    val allTerms: Flow<List<Term>>
+    @get:Query("select id, name, category, bookmarked from terms order by id")
+    val allTerms: Flow<List<TermListItem>>
 
-    @get:Query("select * from terms where bookmarked = 1 order by id")
-    val bookmarkedTerms: Flow<List<Term>>
+    @get:Query("select id, name, category, bookmarked from terms where bookmarked = 1 order by id")
+    val bookmarkedTerms: Flow<List<TermListItem>>
 
     @Query("select * from terms where id = :id")
     fun getTerm(id: Long): LiveData<Term>

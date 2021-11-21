@@ -27,19 +27,19 @@ class GettingTermRepository private constructor(
         }
     }
 
-    fun getAllTerms(): Flow<List<Term>> {
+    fun getAllTerms(): Flow<List<TermListItem>> {
         return termDao.allTerms
     }
 
-    fun getBookmarkedTerms(): Flow<List<Term>> {
+    fun getBookmarkedTerms(): Flow<List<TermListItem>> {
         return termDao.bookmarkedTerms
     }
 
-    fun getCategorizedTerms(terms: Flow<List<Term>>): Flow<Map<String, List<Term>>> {
+    fun getCategorizedTerms(terms: Flow<List<TermListItem>>): Flow<Map<String, List<TermListItem>>> {
         return terms.map { categorize(it) }.flowOn(dispatcher)
     }
 
-    private fun categorize(terms: List<Term>): Map<String, List<Term>> {
+    private fun categorize(terms: List<TermListItem>): Map<String, List<TermListItem>> {
         return terms.groupBy { it.category }
     }
 

@@ -2,7 +2,7 @@ package com.wanjuuuuu.androiddictionary.viewmodels
 
 import androidx.lifecycle.*
 import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
-import com.wanjuuuuu.androiddictionary.data.Term
+import com.wanjuuuuu.androiddictionary.data.TermListItem
 import com.wanjuuuuu.androiddictionary.data.UpdatingTermRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -24,7 +24,7 @@ class TermListViewModel(
         else gettingTermRepository.getAllTerms().asLiveData()
     }
 
-    class CategorizedTerms(val map: Map<String, List<Term>> = mapOf())
+    class CategorizedTerms(val map: Map<String, List<TermListItem>> = mapOf())
 
     private val _categorizedTerms = MutableStateFlow(CategorizedTerms())
     val categorizedTerms: LiveData<CategorizedTerms> = _categorizedTerms.asLiveData()

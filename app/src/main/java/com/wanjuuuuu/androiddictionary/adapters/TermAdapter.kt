@@ -7,12 +7,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.wanjuuuuu.androiddictionary.data.Term
+import com.wanjuuuuu.androiddictionary.data.TermListItem
 import com.wanjuuuuu.androiddictionary.databinding.ListItemTermBinding
 import com.wanjuuuuu.androiddictionary.fragments.TermListFragmentDirections
 
 class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
-    ListAdapter<Term, TermAdapter.TermViewHolder>(TermDiffCallback()) {
+    ListAdapter<TermListItem, TermAdapter.TermViewHolder>(TermDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermViewHolder {
         return TermViewHolder(
@@ -34,13 +34,13 @@ class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -
                 View.OnClickListener { view -> binding.term?.let { navigateToDetail(view, it) } }
         }
 
-        private fun navigateToDetail(view: View, term: Term) {
+        private fun navigateToDetail(view: View, term: TermListItem) {
             val action =
                 TermListFragmentDirections.actionTermListFragmentToTermDetailFragment(term.id)
             view.findNavController().navigate(action)
         }
 
-        fun bind(item: Term) {
+        fun bind(item: TermListItem) {
             binding.term = item
             binding.bookmarkClickListener = View.OnClickListener {
                 it.run { isSelected = !isSelected }
@@ -50,12 +50,12 @@ class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -
     }
 }
 
-private class TermDiffCallback : DiffUtil.ItemCallback<Term>() {
-    override fun areItemsTheSame(oldItem: Term, newItem: Term): Boolean {
+private class TermDiffCallback : DiffUtil.ItemCallback<TermListItem>() {
+    override fun areItemsTheSame(oldItem: TermListItem, newItem: TermListItem): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Term, newItem: Term): Boolean {
+    override fun areContentsTheSame(oldItem: TermListItem, newItem: TermListItem): Boolean {
         return oldItem.bookmarked == newItem.bookmarked // changes to be applied
     }
 }
