@@ -12,7 +12,9 @@ import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.utils.TAG
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
@@ -56,8 +58,12 @@ class TermListFragment : Fragment() {
 
     private fun observeData(adapter: TermAdapter) {
         termListViewModel.run {
-            terms.observe(viewLifecycleOwner, Observer { result -> adapter.submitList(result) })
-            categorizedTerms.observe(viewLifecycleOwner, Observer { Log.d(TAG, "$it") })
+            terms.observe(viewLifecycleOwner, Observer {
+                adapter.submitList(it)
+            })
+            categorizedTerms.observe(
+                viewLifecycleOwner,
+                Observer { Log.e(TAG, "categorized : ${it.map}") })
         }
     }
 

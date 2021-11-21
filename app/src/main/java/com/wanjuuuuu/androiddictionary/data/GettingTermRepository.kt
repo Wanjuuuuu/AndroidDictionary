@@ -1,12 +1,11 @@
 package com.wanjuuuuu.androiddictionary.data
 
-import androidx.annotation.AnyThread
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class GettingTermRepository private constructor(
     private val termDao: TermDao,
@@ -28,21 +27,20 @@ class GettingTermRepository private constructor(
         }
     }
 
-    fun getAllTerms(): LiveData<List<Term>> {
+    fun getAllTerms(): Flow<List<Term>> {
         return termDao.allTerms
     }
 
-    fun getBookmarkedTerms(): LiveData<List<Term>> {
+    fun getBookmarkedTerms(): Flow<List<Term>> {
         return termDao.bookmarkedTerms
     }
 
-    fun getCategorizedTerms(terms: List<Term>): LiveData<Map<String, List<Term>>> {
-        return liveData { emit(terms.categorize()) }
+    fun getCategorizedTerms(terms: Flow<List<Term>>): Flow<Map<String, List<Term>>> {
+        return terms.map { categorize(it) }.flowOn(dispatcher)
     }
 
-    @AnyThread
-    private suspend fun List<Term>.categorize(): Map<String, List<Term>> {
-        return withContext(dispatcher) { groupBy { it.category } }
+    private fun categorize(terms: List<Term>): Map<String, List<Term>> {
+        return terms.groupBy { it.category }
     }
 
     fun getTerm(termId: Long): LiveData<Term> {

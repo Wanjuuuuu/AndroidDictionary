@@ -2,15 +2,16 @@ package com.wanjuuuuu.androiddictionary.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TermDao {
 
     @get:Query("select * from terms order by id")
-    val allTerms: LiveData<List<Term>>
+    val allTerms: Flow<List<Term>>
 
     @get:Query("select * from terms where bookmarked = 1 order by id")
-    val bookmarkedTerms: LiveData<List<Term>>
+    val bookmarkedTerms: Flow<List<Term>>
 
     @Query("select * from terms where id = :id")
     fun getTerm(id: Long): LiveData<Term>
