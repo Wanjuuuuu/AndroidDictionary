@@ -11,23 +11,23 @@ import com.wanjuuuuu.androiddictionary.data.TermListItem
 import com.wanjuuuuu.androiddictionary.databinding.ListItemTermBinding
 import com.wanjuuuuu.androiddictionary.fragments.TermListFragmentDirections
 
-class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
-    ListAdapter<TermListItem, TermAdapter.TermViewHolder>(TermDiffCallback()) {
+class ListItemAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
+    ListAdapter<TermListItem, ListItemAdapter.TermItemViewHolder>(ListItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermViewHolder {
-        return TermViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermItemViewHolder {
+        return TermItemViewHolder(
             ListItemTermBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: TermViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TermItemViewHolder, position: Int) {
         val term = getItem(position)
         holder.bind(term)
     }
 
-    inner class TermViewHolder(private val binding: ListItemTermBinding) :
+    inner class TermItemViewHolder(private val binding: ListItemTermBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.itemClickListener =
@@ -50,7 +50,7 @@ class TermAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -
     }
 }
 
-private class TermDiffCallback : DiffUtil.ItemCallback<TermListItem>() {
+private class ListItemDiffCallback : DiffUtil.ItemCallback<TermListItem>() {
     override fun areItemsTheSame(oldItem: TermListItem, newItem: TermListItem): Boolean {
         return oldItem.id == newItem.id
     }

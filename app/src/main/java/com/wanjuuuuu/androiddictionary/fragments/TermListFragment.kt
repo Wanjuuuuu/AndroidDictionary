@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.wanjuuuuu.androiddictionary.R
-import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
+import com.wanjuuuuu.androiddictionary.adapters.ListItemAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.utils.TAG
@@ -30,7 +30,7 @@ class TermListFragment : Fragment() {
         setUpFragment()
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
-        val termAdapter = TermAdapter { id, bookmarked -> onClickBookmark(id, bookmarked) }
+        val termAdapter = ListItemAdapter { id, bookmarked -> onClickBookmark(id, bookmarked) }
         binding.termList.adapter = termAdapter
 
         observeData(termAdapter)
@@ -56,7 +56,7 @@ class TermListFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    private fun observeData(adapter: TermAdapter) {
+    private fun observeData(adapter: ListItemAdapter) {
         termListViewModel.run {
             terms.observe(viewLifecycleOwner, Observer {
                 adapter.submitList(it)
