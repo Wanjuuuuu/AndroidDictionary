@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.TermListItem
-import com.wanjuuuuu.androiddictionary.databinding.ListItemTermBinding
+import com.wanjuuuuu.androiddictionary.databinding.ListTermItemBinding
 import com.wanjuuuuu.androiddictionary.fragments.TermListFragmentDirections
 
 class ListItemAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
@@ -16,7 +16,7 @@ class ListItemAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolea
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermItemViewHolder {
         return TermItemViewHolder(
-            ListItemTermBinding.inflate(
+            ListTermItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -27,7 +27,7 @@ class ListItemAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolea
         holder.bind(term)
     }
 
-    inner class TermItemViewHolder(private val binding: ListItemTermBinding) :
+    inner class TermItemViewHolder(private val binding: ListTermItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.itemClickListener =

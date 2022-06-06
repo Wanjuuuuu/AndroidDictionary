@@ -9,13 +9,13 @@
         android:background="@color/outer_background">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/term_list"
+            android:id="@+id/term_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="@dimen/term_list_padding"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/list_item_term" />
+            tools:listitem="@layout/list_group_item" />
     </FrameLayout>
 </layout>

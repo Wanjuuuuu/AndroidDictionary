@@ -2,7 +2,8 @@ package com.wanjuuuuu.androiddictionary.viewmodels
 
 import androidx.lifecycle.*
 import com.wanjuuuuu.androiddictionary.data.GettingTermRepository
-import com.wanjuuuuu.androiddictionary.data.TermListItem
+import com.wanjuuuuu.androiddictionary.data.ListGroup
+import com.wanjuuuuu.androiddictionary.data.ListGroupTransformer
 import com.wanjuuuuu.androiddictionary.data.UpdatingTermRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -24,7 +25,7 @@ class TermListViewModel(
         else gettingTermRepository.getAllTerms().asLiveData()
     }
 
-    class CategorizedTerms(val map: Map<String, List<TermListItem>> = mapOf())
+    class CategorizedTerms(val list: List<ListGroup> = listOf())
 
     private val _categorizedTerms = MutableStateFlow(CategorizedTerms())
     val categorizedTerms: LiveData<CategorizedTerms> = _categorizedTerms.asLiveData()
@@ -32,13 +33,15 @@ class TermListViewModel(
     private val categorizingFlow = isFilteredByBookmark().map {
         if (it) gettingTermRepository.getBookmarkedTerms()
         else gettingTermRepository.getAllTerms()
-    }.flatMapLatest {
+    }.mapLatest {
         gettingTermRepository.getCategorizedTerms(it)
+    }.flatMapLatest {
+        ListGroupTransformer.transform(it)
     }
 
     init {
         viewModelScope.launch {
-            categorizingFlow.collect {
+            categorizingFlow.collectLatest {
                 _categorizedTerms.value = CategorizedTerms(it)
             }
         }
