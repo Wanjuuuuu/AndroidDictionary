@@ -1,5 +1,6 @@
 package com.wanjuuuuu.androiddictionary.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,11 +8,27 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.ListGroup
 import com.wanjuuuuu.androiddictionary.databinding.ListGroupItemBinding
+import com.wanjuuuuu.androiddictionary.utils.TAG
 
 class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
     ListAdapter<ListGroup, ListGroupAdapter.TermGroupViewHolder>(ListGroupDiffCallback()) {
 
+    private val listItemAdapters = ListItemAdapters()
+
+    override fun submitList(list: List<ListGroup>?) {
+        super.submitList(list)
+        submitListItems(requireNotNull(list))
+    }
+
+    private fun submitListItems(list: List<ListGroup>) {
+        list.forEach {
+            val adapter = listItemAdapters.getOrNew(it.category, onClickBookmark)
+            adapter.submitList(it.terms)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermGroupViewHolder {
+        Log.e(TAG, "onCreateViewHolder")
         return TermGroupViewHolder(
             ListGroupItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -20,30 +37,36 @@ class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boole
     }
 
     override fun onBindViewHolder(holder: TermGroupViewHolder, position: Int) {
+        Log.e(TAG, "onBindViewHolder : $position")
         val group = getItem(position)
-        holder.bind(group)
+        val adapter = getListItemAdapter(group.category)
+        holder.bind(group, adapter)
     }
 
-    inner class TermGroupViewHolder(private val binding: ListGroupItemBinding) :
+    private fun getListItemAdapter(category: String): ListItemAdapter {
+        return listItemAdapters.getOrNew(category, onClickBookmark)
+    }
+
+    class TermGroupViewHolder(private val binding: ListGroupItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(group: ListGroup) {
+        fun bind(group: ListGroup, adapter: ListItemAdapter) {
+            Log.e(TAG, "TermGroupViewHolder.bind : ${group.category}")
             binding.category = group.category
 
-            val adapter = ListItemAdapter(onClickBookmark)
             binding.termList.adapter = adapter
-
-            adapter.submitList(group.terms)
         }
     }
 }
 
+//TODO: 새로운 group/item이 추가되어도 잘 동작하는지 확인 필요
 private class ListGroupDiffCallback : DiffUtil.ItemCallback<ListGroup>() {
+
     override fun areItemsTheSame(oldItem: ListGroup, newItem: ListGroup): Boolean {
-        return oldItem == newItem
+        return oldItem.category == newItem.category
     }
 
     override fun areContentsTheSame(oldItem: ListGroup, newItem: ListGroup): Boolean {
-        return oldItem == newItem
+        return oldItem.category == newItem.category
     }
 }
