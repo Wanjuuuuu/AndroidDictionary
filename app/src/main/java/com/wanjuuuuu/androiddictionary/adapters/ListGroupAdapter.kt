@@ -1,6 +1,5 @@
 package com.wanjuuuuu.androiddictionary.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.ListGroup
 import com.wanjuuuuu.androiddictionary.databinding.ListGroupItemBinding
-import com.wanjuuuuu.androiddictionary.utils.TAG
 
 class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
     ListAdapter<ListGroup, ListGroupAdapter.TermGroupViewHolder>(ListGroupDiffCallback()) {
@@ -28,7 +26,6 @@ class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boole
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TermGroupViewHolder {
-        Log.e(TAG, "onCreateViewHolder")
         return TermGroupViewHolder(
             ListGroupItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -37,7 +34,6 @@ class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boole
     }
 
     override fun onBindViewHolder(holder: TermGroupViewHolder, position: Int) {
-        Log.e(TAG, "onBindViewHolder : $position")
         val group = getItem(position)
         val adapter = getListItemAdapter(group.category)
         holder.bind(group, adapter)
@@ -51,9 +47,7 @@ class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boole
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(group: ListGroup, adapter: ListItemAdapter) {
-            Log.e(TAG, "TermGroupViewHolder.bind : ${group.category}")
             binding.category = group.category
-
             binding.termList.adapter = adapter
         }
     }
