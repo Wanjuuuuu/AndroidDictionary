@@ -5,35 +5,31 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.wanjuuuuu.androiddictionary.R
-import com.wanjuuuuu.androiddictionary.adapters.TermAdapter
+import com.wanjuuuuu.androiddictionary.adapters.ListGroupAdapter
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class TermListFragment : Fragment() {
 
     private lateinit var binding: FragmentTermListBinding
     private val termListViewModel: TermListViewModel by viewModels {
         Injector.provideTermListViewModelFactory(this)
     }
-    private val updatingTermRepository by lazy {
-        Injector.getUpdatingTermRepository(requireContext())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setUpFragment()
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
-        val termAdapter = TermAdapter { id, bookmarked -> onClickBookmark(id, bookmarked) }
-        binding.termList.adapter = termAdapter
+        val termAdapter = ListGroupAdapter { id, bookmarked -> onClickBookmark(id, bookmarked) }
+        binding.termGroup.adapter = termAdapter
 
         observeData(termAdapter)
 
@@ -58,15 +54,15 @@ class TermListFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    private fun observeData(adapter: TermAdapter) {
-        termListViewModel.terms.observe(
-            viewLifecycleOwner,
-            Observer { result -> adapter.submitList(result) })
+    private fun observeData(adapter: ListGroupAdapter) {
+        termListViewModel.run {
+            categorizedTerms.observe(
+                viewLifecycleOwner,
+                Observer { adapter.submitList(it.list) })
+        }
     }
 
     private fun onClickBookmark(id: Long, bookmarked: Boolean) {
-        lifecycleScope.launch(Dispatchers.Default) {
-            updatingTermRepository.setTermBookmarked(id, bookmarked)
-        }
+        termListViewModel.updateBookmark(id, bookmarked)
     }
 }

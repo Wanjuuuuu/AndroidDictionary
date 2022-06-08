@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="term_list_padding">6dp</dimen>
+    <integer name="list_category_maxLines">2</integer>
+    <dimen name="list_category_textSize">16sp</dimen>
+    <dimen name="list_category_height">54dp</dimen>
+    <dimen name="list_category_paddingStart">14dp</dimen>
+    <dimen name="list_category_paddingEnd">12dp</dimen>
     <dimen name="list_item_height">62dp</dimen>
     <dimen name="list_item_textSize">20sp</dimen>
     <dimen name="list_item_paddingStart">28dp</dimen>

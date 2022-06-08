@@ -1,12 +1,13 @@
 package com.wanjuuuuu.androiddictionary.data
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "terms")
 data class Term(
     val name: String,
-    val url: String
+    val category: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
@@ -14,11 +15,16 @@ data class Term(
     var scrapedTime: Long = 0
     var bookmarked: Boolean = false
 
+    @get:Ignore
     val needRescraping: Boolean
         get() = System.currentTimeMillis() - scrapedTime > SCRAP_EXPIRE_MILLI
 
+    @get:Ignore
+    val url: String
+        get() = "$category/$name"
+
     override fun toString(): String {
-        return "id=$id\nname=$name\nurl=$url\nmodifyTime=$scrapedTime\ndescription=$description"
+        return "id=$id\nurl=$url\nscrapedTime=$scrapedTime\nbookmarked=$bookmarked"
     }
 
     companion object {

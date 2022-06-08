@@ -14,6 +14,7 @@ object Injector {
     fun provideTermListViewModelFactory(fragment: Fragment): TermListViewModelFactory {
         return TermListViewModelFactory(
             getGettingTermRepository(fragment.requireContext()),
+            getUpdatingTermRepository(fragment.requireContext()),
             fragment
         )
     }
@@ -22,10 +23,14 @@ object Injector {
         context: Context,
         termId: Long
     ): TermDetailViewModelFactory {
-        return TermDetailViewModelFactory(getGettingTermRepository(context), termId)
+        return TermDetailViewModelFactory(
+            getGettingTermRepository(context),
+            getUpdatingTermRepository(context),
+            termId
+        )
     }
 
-    fun getUpdatingTermRepository(context: Context): UpdatingTermRepository {
+    private fun getUpdatingTermRepository(context: Context): UpdatingTermRepository {
         return UpdatingTermRepository.getInstance(
             AppDatabase.getInstance(context.applicationContext).termDao(),
             AndroidReferenceService.create()
