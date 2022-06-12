@@ -12,6 +12,10 @@
         <variable
             name="collapsed"
             type="boolean" />
+
+        <variable
+            name="collapseClickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
@@ -21,14 +25,15 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/list_category_height"
             android:gravity="center"
+            android:onClick="@{collapseClickListener}"
             android:orientation="horizontal"
             android:paddingStart="@dimen/list_category_paddingStart"
             android:paddingEnd="@dimen/list_category_paddingEnd">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/expandOrCollapse_button"
                 android:layout_width="@dimen/list_category_expandOrCollapse_width"
                 android:layout_height="@dimen/list_category_expandOrCollapse_height"
@@ -54,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            app:isVisible="@{!collapsed}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="1"
             tools:listitem="@layout/list_term_item" />

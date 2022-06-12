@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.wanjuuuuu.androiddictionary.R
 import com.wanjuuuuu.androiddictionary.adapters.ListGroupAdapter
+import com.wanjuuuuu.androiddictionary.data.ListGroup
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermListBinding
 import com.wanjuuuuu.androiddictionary.utils.Injector
 import com.wanjuuuuu.androiddictionary.viewmodels.TermListViewModel
@@ -28,7 +29,9 @@ class TermListFragment : Fragment() {
         setUpFragment()
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
-        val termAdapter = ListGroupAdapter { id, bookmarked -> onClickBookmark(id, bookmarked) }
+        val termAdapter =
+            ListGroupAdapter({ listGroup -> onClickCollapse(listGroup) },
+                { id, bookmarked -> onClickBookmark(id, bookmarked) })
         binding.termGroup.adapter = termAdapter
 
         observeData(termAdapter)
@@ -58,11 +61,15 @@ class TermListFragment : Fragment() {
         termListViewModel.run {
             categorizedTerms.observe(
                 viewLifecycleOwner,
-                Observer { adapter.submitList(it.list) })
+                Observer { adapter.submitList(it) })
         }
     }
 
     private fun onClickBookmark(id: Long, bookmarked: Boolean) {
         termListViewModel.updateBookmark(id, bookmarked)
+    }
+
+    private fun onClickCollapse(listGroup: ListGroup) {
+        termListViewModel.expandOrCollapseList(listGroup)
     }
 }
