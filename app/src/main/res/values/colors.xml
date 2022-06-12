@@ -15,4 +15,7 @@
     <color name="bookmark_normal">#ffe6e6e6</color>
     <color name="bookmark_selected">#fffa6df5</color>
     <color name="filter_menu">#ffffffff</color>
+
+    <color name="collapse_button">#ff5f5f5f</color>
+    <color name="expand_button">#ff5f5f5f</color>
 </resources>

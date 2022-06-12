@@ -8,6 +8,10 @@
         <variable
             name="category"
             type="String" />
+
+        <variable
+            name="collapsed"
+            type="boolean" />
     </data>
 
     <LinearLayout
@@ -20,8 +24,17 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_category_height"
             android:gravity="center"
+            android:orientation="horizontal"
             android:paddingStart="@dimen/list_category_paddingStart"
             android:paddingEnd="@dimen/list_category_paddingEnd">
+
+            <ImageButton
+                android:id="@+id/expandOrCollapse_button"
+                android:layout_width="@dimen/list_category_expandOrCollapse_width"
+                android:layout_height="@dimen/list_category_expandOrCollapse_height"
+                android:layout_marginEnd="@dimen/list_category_expandOrCollapse_marginEnd"
+                android:background="@{collapsed? @drawable/ic_baseline_expand_more : @drawable/ic_baseline_expand_less}"
+                android:contentDescription="@{collapsed? @string/collapsed : @string/expanded}" />
 
             <TextView
                 android:layout_width="0dp"
