@@ -5,7 +5,7 @@ data class ListGroup(
     val terms: List<TermListItem>,
     val collapsed: Boolean = false
 ) {
-    fun toggleCollapsed(): ListGroup {
-        return copy(collapsed = !collapsed)
+    fun setCollapsed(collapsed: Boolean): ListGroup {
+        return copy(collapsed = collapsed)
     }
 }

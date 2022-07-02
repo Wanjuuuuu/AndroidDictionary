@@ -70,6 +70,6 @@ class TermListFragment : Fragment() {
     }
 
     private fun onClickCollapse(listGroup: ListGroup) {
-        termListViewModel.expandOrCollapseList(listGroup)
+        termListViewModel.expandOrCollapseCategory(listGroup)
     }
 }
