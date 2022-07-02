@@ -18,6 +18,7 @@ class TermListViewModel(
 
     companion object {
         private const val BOOKMARK_SAVED_STATE_KEY = "BOOKMARK_SAVED_STATE_KEY"
+        private const val COLLAPSED_CATEGORIES_KEY = "COLLAPSED_CATEGORIES_KEY"
     }
 
     val terms = isFilteredByBookmark().asLiveData().switchMap {
@@ -25,10 +26,8 @@ class TermListViewModel(
         else gettingTermRepository.getAllTerms().asLiveData()
     }
 
-    class CategorizedTerms(val list: List<ListGroup> = listOf())
-
-    private val _categorizedTerms = MutableStateFlow(CategorizedTerms())
-    val categorizedTerms: LiveData<CategorizedTerms> = _categorizedTerms.asLiveData()
+    private val _categorizedTerms = MutableStateFlow(listOf<ListGroup>())
+    val categorizedTerms: LiveData<List<ListGroup>> = _categorizedTerms.asLiveData()
 
     private val categorizingFlow = isFilteredByBookmark().map {
         if (it) gettingTermRepository.getBookmarkedTerms()
@@ -36,13 +35,13 @@ class TermListViewModel(
     }.mapLatest {
         gettingTermRepository.getCategorizedTerms(it)
     }.flatMapLatest {
-        ListGroupTransformer.transform(it)
+        ListGroupTransformer.transform(it, getCategoriesCollapsed())
     }
 
     init {
         viewModelScope.launch {
             categorizingFlow.collectLatest {
-                _categorizedTerms.value = CategorizedTerms(it)
+                _categorizedTerms.value = it
             }
         }
     }
@@ -60,5 +59,33 @@ class TermListViewModel(
 
     private fun isFilteredByBookmark(): Flow<Boolean> {
         return savedStateHandle.getLiveData(BOOKMARK_SAVED_STATE_KEY, false).asFlow()
+    }
+
+    fun expandOrCollapseCategory(listGroup: ListGroup) {
+        val toggled = toggleCategoryCollapsed(listGroup)
+        val terms = _categorizedTerms.value.toList()
+        _categorizedTerms.value =
+            terms.map { if (it.category == listGroup.category) it.setCollapsed(toggled) else it }
+    }
+
+    private fun toggleCategoryCollapsed(listGroup: ListGroup): Boolean {
+        val set = getCategoriesCollapsed().toMutableSet()
+        val toggled = !set.contains(listGroup.category)
+        if (toggled) {
+            set.add(listGroup.category)
+        } else {
+            set.remove(listGroup.category)
+        }
+        setCategoriesCollapsed(set)
+        return toggled
+    }
+
+    private fun getCategoriesCollapsed(): Set<String> {
+        val list = savedStateHandle.get<List<String>>(COLLAPSED_CATEGORIES_KEY) ?: listOf()
+        return list.toSet()
+    }
+
+    private fun setCategoriesCollapsed(set: Set<String>) {
+        savedStateHandle.set(COLLAPSED_CATEGORIES_KEY, set.toList())
     }
 }

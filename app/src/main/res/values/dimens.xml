@@ -5,7 +5,10 @@
     <dimen name="list_category_textSize">16sp</dimen>
     <dimen name="list_category_height">54dp</dimen>
     <dimen name="list_category_paddingStart">14dp</dimen>
-    <dimen name="list_category_paddingEnd">12dp</dimen>
+    <dimen name="list_category_paddingEnd">14dp</dimen>
+    <dimen name="list_category_expandOrCollapse_height">24dp</dimen>
+    <dimen name="list_category_expandOrCollapse_width">24dp</dimen>
+    <dimen name="list_category_expandOrCollapse_marginEnd">6dp</dimen>
     <dimen name="list_item_height">62dp</dimen>
     <dimen name="list_item_textSize">20sp</dimen>
     <dimen name="list_item_paddingStart">28dp</dimen>

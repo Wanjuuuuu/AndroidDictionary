@@ -7,11 +7,17 @@ object ListGroupTransformer {
 
     private val dispatcher = Dispatchers.Default
 
-    fun transform(categorizingFlow: Flow<Map<String, List<TermListItem>>>): Flow<List<ListGroup>> {
-        return categorizingFlow.map { toGroup(it) }.flowOn(dispatcher)
+    fun transform(
+        categorizingFlow: Flow<Map<String, List<TermListItem>>>,
+        collapsed: Set<String>
+    ): Flow<List<ListGroup>> {
+        return categorizingFlow.map { toGroup(it, collapsed) }.flowOn(dispatcher)
     }
 
-    private fun toGroup(categorized: Map<String, List<TermListItem>>): List<ListGroup> {
-        return categorized.map { ListGroup(it.key, it.value) }
+    private fun toGroup(
+        categorized: Map<String, List<TermListItem>>,
+        collapsed: Set<String>
+    ): List<ListGroup> {
+        return categorized.map { ListGroup(it.key, it.value, collapsed.contains(it.key)) }
     }
 }

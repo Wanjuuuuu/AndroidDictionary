@@ -1,6 +1,7 @@
 package com.wanjuuuuu.androiddictionary.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wanjuuuuu.androiddictionary.data.ListGroup
 import com.wanjuuuuu.androiddictionary.databinding.ListGroupItemBinding
 
-class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit) :
-    ListAdapter<ListGroup, ListGroupAdapter.TermGroupViewHolder>(ListGroupDiffCallback()) {
+class ListGroupAdapter(
+    private val onClickCollapse: (listGroup: ListGroup) -> Unit,
+    private val onClickBookmark: (id: Long, bookmarked: Boolean) -> Unit
+) : ListAdapter<ListGroup, ListGroupAdapter.TermGroupViewHolder>(ListGroupDiffCallback()) {
 
     private val listItemAdapters = ListItemAdapters()
 
@@ -43,11 +46,13 @@ class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boole
         return listItemAdapters.getOrNew(category, onClickBookmark)
     }
 
-    class TermGroupViewHolder(private val binding: ListGroupItemBinding) :
+    inner class TermGroupViewHolder(private val binding: ListGroupItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(group: ListGroup, adapter: ListItemAdapter) {
             binding.category = group.category
+            binding.collapsed = group.collapsed
+            binding.collapseClickListener = View.OnClickListener { onClickCollapse(group) }
             binding.termList.adapter = adapter
         }
     }
@@ -61,6 +66,6 @@ private class ListGroupDiffCallback : DiffUtil.ItemCallback<ListGroup>() {
     }
 
     override fun areContentsTheSame(oldItem: ListGroup, newItem: ListGroup): Boolean {
-        return oldItem.category == newItem.category
+        return oldItem.collapsed == newItem.collapsed
     }
 }
