@@ -34,7 +34,7 @@
                 android:id="@+id/title_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_rectangle"
+                android:background="@drawable/ripple_rounded_rectangle"
                 android:gravity="center"
                 android:onClick="@{termTitleClickListener}"
                 android:orientation="horizontal"
