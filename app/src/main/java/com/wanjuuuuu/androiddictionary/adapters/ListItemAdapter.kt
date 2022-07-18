@@ -68,6 +68,6 @@ private class ListItemDiffCallback : DiffUtil.ItemCallback<TermListItem>() {
     }
 
     override fun areContentsTheSame(oldItem: TermListItem, newItem: TermListItem): Boolean {
-        return oldItem.bookmarked == newItem.bookmarked // changes to be applied
+        return oldItem.id == newItem.id
     }
 }
