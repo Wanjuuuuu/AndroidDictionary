@@ -54,7 +54,7 @@ class ListItemAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolea
         fun bind(item: TermListItem) {
             binding.term = item
             binding.bookmarkClickListener = View.OnClickListener {
-                it.run { isSelected = !isSelected }
+                it.run { setBookmarkSelected(this, !isSelected) }
                 onClickBookmark(item.id, it.isSelected)
             }
         }

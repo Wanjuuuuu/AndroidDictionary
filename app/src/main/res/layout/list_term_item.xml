@@ -47,9 +47,8 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/list_item_bookmark_marginStart"
             android:background="@drawable/bookmark_selector"
-            android:stateListAnimator="@xml/animate_bookmark"
             android:contentDescription="@string/bookmark"
             android:onClick="@{bookmarkClickListener}"
-            app:isSelected="@{term.bookmarked}" />
+            app:bookmarkSelected="@{term.bookmarked}" />
     </LinearLayout>
 </layout>

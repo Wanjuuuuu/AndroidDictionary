@@ -65,8 +65,7 @@
                     android:background="@drawable/bookmark_selector"
                     android:contentDescription="@string/bookmark"
                     android:onClick="@{bookmarkClickListener}"
-                    android:stateListAnimator="@xml/animate_bookmark"
-                    app:isSelected="@{viewModel.term.bookmarked}" />
+                    app:bookmarkSelected="@{viewModel.term.bookmarked}" />
             </LinearLayout>
 
             <LinearLayout

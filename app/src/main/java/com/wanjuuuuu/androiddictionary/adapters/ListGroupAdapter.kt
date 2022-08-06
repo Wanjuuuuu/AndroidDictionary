@@ -53,7 +53,6 @@ class ListGroupAdapter(private val onClickBookmark: (id: Long, bookmarked: Boole
     }
 }
 
-//TODO: 새로운 group/item이 추가되어도 잘 동작하는지 확인 필요
 private class ListGroupDiffCallback : DiffUtil.ItemCallback<ListGroup>() {
 
     override fun areItemsTheSame(oldItem: ListGroup, newItem: ListGroup): Boolean {
