@@ -12,10 +12,6 @@
         <variable
             name="term"
             type="com.wanjuuuuu.androiddictionary.data.TermListItem" />
-
-        <variable
-            name="bookmarkClickListener"
-            type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
@@ -40,16 +36,12 @@
             android:textSize="@dimen/list_item_textSize"
             tools:text="@string/dummy_text" />
 
-        <ImageButton
+        <com.wanjuuuuu.androiddictionary.view.BookmarkButton
             android:id="@+id/bookmark_button"
-            android:layout_width="@dimen/list_item_bookmark_width"
-            android:layout_height="@dimen/list_item_bookmark_height"
-            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/list_item_bookmark_marginStart"
-            android:background="@drawable/bookmark_selector"
-            android:stateListAnimator="@xml/animate_bookmark"
             android:contentDescription="@string/bookmark"
-            android:onClick="@{bookmarkClickListener}"
-            app:isSelected="@{term.bookmarked}" />
+            app:bookmarkSelected="@{term.bookmarked}" />
     </LinearLayout>
 </layout>

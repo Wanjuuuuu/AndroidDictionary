@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.wanjuuuuu.androiddictionary.R
+import com.wanjuuuuu.androiddictionary.adapters.setBookmarkSelected
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
 import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
 import com.wanjuuuuu.androiddictionary.utils.Injector
@@ -31,7 +32,7 @@ class TermDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTermDetailBinding.inflate(inflater, container, false).apply {
             viewModel = termDetailViewModel
             lifecycleOwner = viewLifecycleOwner
@@ -45,9 +46,12 @@ class TermDetailFragment : Fragment() {
     }
 
     private fun initBookmarkClickListener() {
-        binding.bookmarkClickListener = View.OnClickListener {
-            it.run { isSelected = !isSelected }
-            onClickBookmark(args.termId, it.isSelected)
+        binding.bookmarkButton.setOnClickListener {
+            it.run {
+                val toggled = !isSelected
+                setBookmarkSelected(this, toggled)
+                onClickBookmark(args.termId, toggled)
+            }
         }
     }
 

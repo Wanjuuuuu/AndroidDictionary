@@ -53,9 +53,12 @@ class ListItemAdapter(private val onClickBookmark: (id: Long, bookmarked: Boolea
 
         fun bind(item: TermListItem) {
             binding.term = item
-            binding.bookmarkClickListener = View.OnClickListener {
-                it.run { isSelected = !isSelected }
-                onClickBookmark(item.id, it.isSelected)
+            binding.bookmarkButton.setOnClickListener {
+                it.run {
+                    val toggled = !isSelected
+                    setBookmarkSelected(this, toggled)
+                    onClickBookmark(item.id, toggled)
+                }
             }
         }
     }
@@ -68,6 +71,6 @@ private class ListItemDiffCallback : DiffUtil.ItemCallback<TermListItem>() {
     }
 
     override fun areContentsTheSame(oldItem: TermListItem, newItem: TermListItem): Boolean {
-        return oldItem.bookmarked == newItem.bookmarked // changes to be applied
+        return oldItem.id == newItem.id
     }
 }

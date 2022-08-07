@@ -10,10 +10,6 @@
             type="com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel" />
 
         <variable
-            name="bookmarkClickListener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
             name="termTitleClickListener"
             type="android.view.View.OnClickListener" />
 
@@ -34,7 +30,7 @@
                 android:id="@+id/title_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_rectangle"
+                android:background="@drawable/ripple_rounded_rectangle"
                 android:gravity="center"
                 android:onClick="@{termTitleClickListener}"
                 android:orientation="horizontal"
@@ -56,17 +52,13 @@
                     android:textSize="@dimen/detail_title_textSize"
                     tools:text="@string/dummy_text" />
 
-                <ImageButton
+                <com.wanjuuuuu.androiddictionary.view.BookmarkButton
                     android:id="@+id/bookmark_button"
-                    android:layout_width="@dimen/detail_bookmark_width"
-                    android:layout_height="@dimen/detail_bookmark_height"
-                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/detail_bookmark_marginStart"
-                    android:background="@drawable/bookmark_selector"
                     android:contentDescription="@string/bookmark"
-                    android:onClick="@{bookmarkClickListener}"
-                    android:stateListAnimator="@xml/animate_bookmark"
-                    app:isSelected="@{viewModel.term.bookmarked}" />
+                    app:bookmarkSelected="@{viewModel.term.bookmarked}" />
             </LinearLayout>
 
             <LinearLayout
