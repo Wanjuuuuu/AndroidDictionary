@@ -32,7 +32,7 @@ class TermDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTermDetailBinding.inflate(inflater, container, false).apply {
             viewModel = termDetailViewModel
             lifecycleOwner = viewLifecycleOwner
@@ -46,9 +46,12 @@ class TermDetailFragment : Fragment() {
     }
 
     private fun initBookmarkClickListener() {
-        binding.bookmarkTouchArea.setOnClickListener {
-            it.run { setBookmarkSelected(this, !isSelected) }
-            onClickBookmark(args.termId, it.isSelected)
+        binding.bookmarkButton.setOnClickListener {
+            it.run {
+                val toggled = !isSelected
+                setBookmarkSelected(this, toggled)
+                onClickBookmark(args.termId, toggled)
+            }
         }
     }
 

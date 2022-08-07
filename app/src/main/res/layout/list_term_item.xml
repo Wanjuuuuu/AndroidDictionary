@@ -36,21 +36,12 @@
             android:textSize="@dimen/list_item_textSize"
             tools:text="@string/dummy_text" />
 
-        <com.wanjuuuuu.androiddictionary.view.TouchDelegateViewGroup
-            android:id="@+id/bookmark_touchArea"
+        <com.wanjuuuuu.androiddictionary.view.BookmarkButton
+            android:id="@+id/bookmark_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/list_item_bookmark_marginStart"
-            android:padding="@dimen/list_item_bookmark_padding">
-
-            <ImageButton
-                android:id="@+id/bookmark_button"
-                android:layout_width="@dimen/list_item_bookmark_width"
-                android:layout_height="@dimen/list_item_bookmark_height"
-                android:layout_gravity="center"
-                android:background="@drawable/bookmark_selector"
-                android:contentDescription="@string/bookmark"
-                app:bookmarkSelected="@{term.bookmarked}" />
-        </com.wanjuuuuu.androiddictionary.view.TouchDelegateViewGroup>
+            android:contentDescription="@string/bookmark"
+            app:bookmarkSelected="@{term.bookmarked}" />
     </LinearLayout>
 </layout>
