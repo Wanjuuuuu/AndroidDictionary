@@ -10,10 +10,6 @@
             type="com.wanjuuuuu.androiddictionary.viewmodels.TermDetailViewModel" />
 
         <variable
-            name="bookmarkClickListener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
             name="termTitleClickListener"
             type="android.view.View.OnClickListener" />
 
@@ -56,16 +52,22 @@
                     android:textSize="@dimen/detail_title_textSize"
                     tools:text="@string/dummy_text" />
 
-                <ImageButton
-                    android:id="@+id/bookmark_button"
-                    android:layout_width="@dimen/detail_bookmark_width"
-                    android:layout_height="@dimen/detail_bookmark_height"
-                    android:layout_gravity="center"
+                <com.wanjuuuuu.androiddictionary.view.TouchDelegateViewGroup
+                    android:id="@id/bookmark_touchArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/detail_bookmark_marginStart"
-                    android:background="@drawable/bookmark_selector"
-                    android:contentDescription="@string/bookmark"
-                    android:onClick="@{bookmarkClickListener}"
-                    app:bookmarkSelected="@{viewModel.term.bookmarked}" />
+                    android:padding="@dimen/detail_bookmark_padding">
+
+                    <ImageButton
+                        android:id="@+id/bookmark_button"
+                        android:layout_width="@dimen/detail_bookmark_width"
+                        android:layout_height="@dimen/detail_bookmark_height"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_selector"
+                        android:contentDescription="@string/bookmark"
+                        app:bookmarkSelected="@{viewModel.term.bookmarked}" />
+                </com.wanjuuuuu.androiddictionary.view.TouchDelegateViewGroup>
             </LinearLayout>
 
             <LinearLayout

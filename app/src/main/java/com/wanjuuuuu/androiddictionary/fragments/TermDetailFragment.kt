@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.wanjuuuuu.androiddictionary.R
+import com.wanjuuuuu.androiddictionary.adapters.setBookmarkSelected
 import com.wanjuuuuu.androiddictionary.databinding.FragmentTermDetailBinding
 import com.wanjuuuuu.androiddictionary.utils.ANDROID_REFERENCE_BASE_URL
 import com.wanjuuuuu.androiddictionary.utils.Injector
@@ -45,8 +46,8 @@ class TermDetailFragment : Fragment() {
     }
 
     private fun initBookmarkClickListener() {
-        binding.bookmarkClickListener = View.OnClickListener {
-            it.run { isSelected = !isSelected }
+        binding.bookmarkTouchArea.setOnClickListener {
+            it.run { setBookmarkSelected(this, !isSelected) }
             onClickBookmark(args.termId, it.isSelected)
         }
     }

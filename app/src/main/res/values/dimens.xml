@@ -13,6 +13,7 @@
     <dimen name="list_item_bookmark_marginStart">14dp</dimen>
     <dimen name="list_item_bookmark_width">24dp</dimen>
     <dimen name="list_item_bookmark_height">24dp</dimen>
+    <dimen name="list_item_bookmark_padding">10dp</dimen>
     <dimen name="rectangle_radius">24dp</dimen>
     <dimen name="rectangle_strokeWidth">0.8dp</dimen>
     <dimen name="term_detail_padding">6dp</dimen>
@@ -23,6 +24,7 @@
     <dimen name="detail_bookmark_marginStart">14dp</dimen>
     <dimen name="detail_bookmark_width">24dp</dimen>
     <dimen name="detail_bookmark_height">24dp</dimen>
+    <dimen name="detail_bookmark_padding">10dp</dimen>
     <dimen name="detail_title_textSize">24sp</dimen>
     <integer name="detail_title_maxLines">2</integer>
     <dimen name="detail_content_textSize">14sp</dimen>
