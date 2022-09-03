@@ -14,6 +14,7 @@ import com.wanjuuuuu.androiddictionary.R
 class BookmarkButton : FrameLayout {
 
     private lateinit var imageButton: ImageButton
+    private var neverSetSelectedAfterBound = true
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -53,15 +54,32 @@ class BookmarkButton : FrameLayout {
         }
     }
 
+    fun bindOnToggledListener(onToggled: (Boolean) -> Unit) {
+        neverSetSelectedAfterBound = true
+
+        setOnClickListener {
+            isSelected = !isSelected
+            onToggled(isSelected)
+        }
+    }
+
     override fun setOnClickListener(onClickListener: OnClickListener?) {
         super.setOnClickListener(onClickListener)
-        imageButton.setOnClickListener { onClickListener?.onClick(this) }
+        imageButton.setOnClickListener(onClickListener)
     }
 
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         imageButton.isSelected = selected
-        animateSelection()
+        doAnimateSelectionIfSetSelectedMoreThanOnce()
+    }
+
+    private fun doAnimateSelectionIfSetSelectedMoreThanOnce() {
+        if (neverSetSelectedAfterBound) {
+            neverSetSelectedAfterBound = !neverSetSelectedAfterBound
+        } else {
+            animateSelection()
+        }
     }
 
     private fun animateSelection() {

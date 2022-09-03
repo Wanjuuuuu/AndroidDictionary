@@ -46,12 +46,8 @@ class TermDetailFragment : Fragment() {
     }
 
     private fun initBookmarkClickListener() {
-        binding.bookmarkButton.setOnClickListener {
-            it.run {
-                val toggled = !isSelected
-                setBookmarkSelected(this, toggled)
-                onClickBookmark(args.termId, toggled)
-            }
+        binding.bookmarkButton.bindOnToggledListener { toggled ->
+            onClickBookmark(args.termId, toggled)
         }
     }
 
