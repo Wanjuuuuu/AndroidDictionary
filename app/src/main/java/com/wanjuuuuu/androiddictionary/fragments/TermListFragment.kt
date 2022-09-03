@@ -30,8 +30,8 @@ class TermListFragment : Fragment() {
         binding = FragmentTermListBinding.inflate(inflater, container, false)
 
         val termAdapter =
-            ListGroupAdapter({ listGroup -> onClickCollapse(listGroup) },
-                { id, bookmarked -> onClickBookmark(id, bookmarked) })
+            ListGroupAdapter({ listGroup -> expandOrCollapseCategory(listGroup) },
+                { id, bookmarked -> updateBookmark(id, bookmarked) })
         binding.termGroup.adapter = termAdapter
 
         observeData(termAdapter)
@@ -65,11 +65,11 @@ class TermListFragment : Fragment() {
         }
     }
 
-    private fun onClickBookmark(id: Long, bookmarked: Boolean) {
+    private fun updateBookmark(id: Long, bookmarked: Boolean) {
         termListViewModel.updateBookmark(id, bookmarked)
     }
 
-    private fun onClickCollapse(listGroup: ListGroup) {
+    private fun expandOrCollapseCategory(listGroup: ListGroup) {
         termListViewModel.expandOrCollapseCategory(listGroup)
     }
 }
